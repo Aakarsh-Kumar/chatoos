@@ -19,8 +19,6 @@ def home():
     rooms=[]
     if current_user.is_authenticated:
         rooms = get_rooms_for_user(current_user.username)
-        print("AK")
-        print(rooms)
     return render_template("index.html",rooms=rooms)
 
 @app.route('/login',methods=['GET','POST'])
@@ -127,8 +125,6 @@ def edit_room(room_id):
             members_to_add = list(set(new_members) - set(existing_room_members))
             members_to_remove = list(set(existing_room_members) - set(new_members))
 
-            print(members_to_remove)
-            print(members_to_add)
 
             if len(members_to_add):
                 add_room_members(room_id, room_name, members_to_add, current_user.username)
@@ -168,4 +164,5 @@ def error_404(e):
     return "404 Not Found"
 
 if __name__ == '__main__':
+    # socketio.run(app,debug=True)
     app.run()

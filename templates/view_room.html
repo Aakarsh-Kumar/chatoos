@@ -4,7 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <title>ROOM | Chatoos</title>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/chat.css">
+
 </head>
 
 <body>
@@ -13,36 +19,74 @@
         <div class="header-right">
             <a href="/">Home</a>
             <a href="/create-room">New Room</a>
-            <a class="active" href="/edit">Edit Room</a>
+            <a class="active" href="/rooms/{{ room._id }}/edit">Edit Room</a>
             <a href="/login">Login</a>
             <a href="/signup">Signup</a>
         </div>
     </div>
     <h1>Welcome to chat room: {{ room.name }}</h1>
-    <button type="button" id="load_older_messages_btn">Load Older Messages</button>
-    <div id="messages">
-        {% for message in messages %}
-        <div><b>{{message.sender}}:&nbsp;[{{message.created_at}}]:&nbsp;</b> {{message.text}}</div>
-        {% endfor %}
+
+    <div class="container">
+        <div class="col-md-12 col-lg-6">
+            <div class="panel">
+                <!--Heading-->
+                <div class="panel-heading">
+                    <div class="panel-control">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default" data-toggle="dropdown"><i class="fa fa-gear"></i></button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a><button type="button" id="load_older_messages_btn">Load Older Messages</button></a>
+                                </li>
+                                <li class="divider"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h3 class="panel-title">Chat</h3>
+                </div>
+
+                <!--Widget body-->
+                <div id="demo-chat-body" class="collapse in">
+                    <div class="nano has-scrollbar" style="height:380px">
+                        <div class="nano-content pad-all" tabindex="0" style="right: -17px;">
+                            <ul class="list-unstyled media-block" id="messages"></ul>
+                        </div>
+                        <div class="nano-pane">
+                            <div class="nano-slider" style="height: 141px; transform: translate(0px, 0px);"></div>
+                        </div>
+                    </div>
+
+                    <!--Widget footer-->
+                    <div class="panel-footer">
+                        <div class="row">
+                            <form id="message_input_form">
+                                <div class="col-xs-9">
+                                    <input type="text" id="message_input" name="message_input" placeholder="Enter your text" class="form-control chat-input">
+                                </div>
+                                <div class="col-xs-3">
+                                    <button class="btn btn-primary btn-block" type="submit">Send</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <div>
 
-    <form id="message_input_form">
-        <input type="text" id="message_input" placeholder="Enter your message here">
-        <button type="submit">Send</button>
-    </form>
-
-    <h3>Members</h3>
-    <ul>
-        {% for member in room_members %}
-        <li>{{ member._id.username }}</li>
-        {% endfor %}
-    </ul>
-
+        <h3>Members</h3>
+        <ul>
+            {% for member in room_members %}
+            <li>{{ member._id.username }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
 <script>
-    const socket = io.connect("https://chatoos.herokuapp.com");
+    const socket = io.connect("http://chatoos.herokuapp.com");
 
     socket.on('connect', function() {
         socket.emit('join_room', {
@@ -55,6 +99,7 @@
         document.getElementById('message_input_form').onsubmit = function(e) {
             e.preventDefault();
             let message = message_input.value.trim();
+            console.log(message)
             if (message.length) {
                 socket.emit('send_message', {
                     username: "{{ username }}",
@@ -69,8 +114,21 @@
 
     let page = 0;
 
+
+    fetch("/rooms/{{ room._id }}/messages?page=" + page, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        response.json().then(messages => {
+            messages.reverse().forEach(message => prepend_message(message.text, message.sender, message.created_at));
+        })
+    })
+
     document.getElementById("load_older_messages_btn").onclick = (e) => {
         page += 1;
+
         fetch("/rooms/{{ room._id }}/messages?page=" + page, {
             method: 'GET',
             headers: {
@@ -84,8 +142,39 @@
     };
 
     function prepend_message(message, username, created_at) {
-        const newNode = document.createElement('div');
-        newNode.innerHTML = `<b>${username}&nbsp;[${created_at}]:&nbsp;</b> ${message}`;
+        const newNode = document.createElement('li');
+        // newNode.innerHTML = `<b>${username}&nbsp;[${created_at}]:&nbsp;</b> ${message}`;
+
+        if (username === "{{ username }}") {
+            newNode.innerHTML = `<div class="media-right">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle img-sm" alt="Profile Picture">
+                                </div>
+                                <div class="media-body pad-hor speech-right">
+                                    <div class="speech">
+                                        <a href="#" class="media-heading">${username}</a>
+                                        <p>${message}</p>
+                                        <p class="speech-time">
+                                            <i class="fa fa-clock-o fa-fw"></i>${created_at}
+                                        </p>
+                                    </div>
+                                </div>`;
+        } else {
+            newNode.innerHTML = `<div class="media-left">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle img-sm" alt="Profile Picture">
+                                </div>
+                                <div class="media-body pad-hor">
+                                    <div class="speech">
+                                        <a href="#" class="media-heading">${username}</a>
+                                        <p>${message}</p>
+                                        <p class="speech-time">
+                                            <i class="fa fa-clock-o fa-fw"></i>${created_at}
+                                        </p>
+                                    </div>
+                                </div>`;
+        }
+
+
+
         const messages_div = document.getElementById('messages');
         messages_div.insertBefore(newNode, messages_div.firstChild);
     }
@@ -98,14 +187,43 @@
     };
 
     socket.on('receive_message', function(data) {
-        console.log(data);
-        const newNode = document.createElement('div');
-        newNode.innerHTML = `<b>${data.username}:&nbsp;[${data.created_at}]:&nbsp;</b> ${data.message}`;
+        const newNode = document.createElement('li');
+
+        newNode.classList.add("mar-btm");
+
+        if (data.username === "{{ username }}") {
+            newNode.innerHTML = `<div class="media-right">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle img-sm" alt="Profile Picture">
+                                </div>
+                                <div class="media-body pad-hor speech-right">
+                                    <div class="speech">
+                                        <a href="#" class="media-heading">${data.username}</a>
+                                        <p>${data.message}</p>
+                                        <p class="speech-time">
+                                            <i class="fa fa-clock-o fa-fw"></i>${data.created_at}
+                                        </p>
+                                    </div>
+                                </div>`;
+        } else {
+            newNode.innerHTML = `<div class="media-left">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle img-sm" alt="Profile Picture">
+                                </div>
+                                <div class="media-body pad-hor">
+                                    <div class="speech">
+                                        <a href="#" class="media-heading">${data.username}</a>
+                                        <p>${data.message}</p>
+                                        <p class="speech-time">
+                                            <i class="fa fa-clock-o fa-fw"></i>${data.created_at}
+                                        </p>
+                                    </div>
+                                </div>`;
+        }
+
+
         document.getElementById('messages').appendChild(newNode);
     });
 
     socket.on('join_room_announcement', function(data) {
-        console.log(data);
         if (data.username !== "{{ username }}") {
             const newNode = document.createElement('div');
             newNode.innerHTML = `<b>${data.username}</b> has joined the room`;
