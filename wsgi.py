@@ -163,5 +163,9 @@ def handle_leave_room_event(data):
 def load_user(username):
     return get_user(username)
 
+@app.errorhandler(404)
+def error_404(e):
+    return "404 Not Found"
+
 if __name__ == '__main__':
     app.run()
