@@ -164,4 +164,4 @@ def load_user(username):
     return get_user(username)
 
 if __name__ == '__main__':
-    socketio.run(app,debug=True,host="192.168.1.8",port="1234")
+    app.run()
