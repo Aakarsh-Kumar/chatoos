@@ -8,8 +8,8 @@ from flask_login import LoginManager
 from pymongo.errors import DuplicateKeyError
 
 app = Flask(__name__,template_folder='templates')
-app.secret_key = "secretKEY"
-socketio = SocketIO(app)
+app.secret_key = "0128d79584614d4e92b42cb07032bb0e"
+socketio = SocketIO(app, logger = True)
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
@@ -17,9 +17,12 @@ login_manager.init_app(app)
 @app.route('/')
 def home():
     rooms=[]
+    room_members = []
     if current_user.is_authenticated:
         rooms = get_rooms_for_user(current_user.username)
-    return render_template("index.html",rooms=rooms)
+        for room in rooms:
+            room_members.append(get_room_members(room['_id']['room_id'])) 
+    return render_template("index.html",rooms=rooms, room_members=room_members)
 
 @app.route('/login',methods=['GET','POST'])
 def login():

@@ -86,7 +86,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
 <script>
-    const socket = io.connect("http://chatoos.herokuapp.com");
+    const socket = io.connect("https://chatoos.herokuapp.com");
 
     socket.on('connect', function() {
         socket.emit('join_room', {
@@ -144,7 +144,7 @@
     function prepend_message(message, username, created_at) {
         const newNode = document.createElement('li');
         // newNode.innerHTML = `<b>${username}&nbsp;[${created_at}]:&nbsp;</b> ${message}`;
-
+        console.log(created_at)
         if (username === "{{ username }}") {
             newNode.innerHTML = `<div class="media-right">
                                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle img-sm" alt="Profile Picture">

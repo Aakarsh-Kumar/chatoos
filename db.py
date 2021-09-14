@@ -3,6 +3,7 @@ from bson.objectid import ObjectId
 from user import User
 from pymongo import DESCENDING, MongoClient
 from werkzeug.security import generate_password_hash
+from pytz import timezone
 
 client = MongoClient("mongodb+srv://main:test@cluster0.aloqh.mongodb.net/chatoosDB?retryWrites=true&w=majority")
 
@@ -54,7 +55,7 @@ def is_room_admin(room_id,username):
     return room_members_collection.count_documents({'_id':{'room_id':ObjectId(room_id),'username':username},'is_room_admin':True})
 
 def save_message(room_id,text,sender):
-    messages_collection.insert_one({'room_id':room_id,'text':text,'sender':sender, 'created_at':datetime.now()})
+    messages_collection.insert_one({'room_id':room_id,'text':text,'sender':sender, 'created_at':datetime.now(timezone('Asia/Kolkata'))})
 
 MESSAGE_FETCH_LIMIT = 3
 

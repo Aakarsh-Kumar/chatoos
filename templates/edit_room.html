@@ -12,9 +12,20 @@
 
     <!-- Main css -->
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/header.css">
 </head>
 
 <body bgcolor="grey">
+    <div class="header">
+        <a href="/" class="logo">Chatoos</a>
+        <div class="header-right">
+            <a class="active" href="/">Home</a> {% if current_user.is_authenticated %}
+            <a href="/create-room">New Room</a>
+            <a href="/logout">Logout</a> {% else %}
+            <a href="/login">Login</a>
+            <a href="/signup">Signup</a> {%endif%}
+        </div>
+    </div>
     <div class="main">
 
         <div class="container">
