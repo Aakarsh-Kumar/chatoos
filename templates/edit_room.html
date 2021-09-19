@@ -19,18 +19,17 @@
     <div class="header">
         <a href="/" class="logo">Chatoos</a>
         <div class="header-right">
-            <a class="active" href="/">Home</a> {% if current_user.is_authenticated %}
+            <a class="active" href="/rooms/{{ room._id }}">Back</a>
+            <a href="/">Home</a>
             <a href="/create-room">New Room</a>
-            <a href="/logout">Logout</a> {% else %}
-            <a href="/login">Login</a>
-            <a href="/signup">Signup</a> {%endif%}
+            <a href="/logout">Logout</a>
         </div>
     </div>
     <div class="main">
 
         <div class="container">
             <form class="appointment-form" id="appointment-form" action="edit" method="POST">
-                <h2>Edit Room ({{room.name}}</h2>
+                <h2>Edit Room ({{room.name}})</h2>
                 <h3>{{message}}</h3>
                 <div class="form-group-1">
                     <input type="text" name=room_name " id=room_name" placeholder="Room Name" value="{{ room.name }}" required autofocus />
