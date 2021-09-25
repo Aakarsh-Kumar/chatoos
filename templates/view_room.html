@@ -3,14 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ROOM | Chatoos</title>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flex-rowmalihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css"> -->
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
 
-    <!-- <style>
+    <style>
         body,
         html {
             height: 100%;
@@ -278,7 +279,7 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
-    </style> -->
+    </style>
     <script>
         $(document).ready(function() {
             $('#action_menu_btn').click(function() {
@@ -286,7 +287,6 @@
             });
         });
     </script>
-
     <link rel="stylesheet" href="/static/css/header.css">
 </head>
 
@@ -301,47 +301,40 @@
         </div>
     </div>
 
-    <!-- <div class="w-100">
-        <div class=" w-100">
-            <div class="chat widthing-2 ">
-                <div class="card h-100">
-                    <div class="card-header msg_head">
-                        <div class="d-flex bd-highlight">
-                            <div class="img_cont">
-                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                                <span class="online_icon"></span>
-                            </div>
-                            <div class="user_info">
-                                <span>{{ room.name }}</span>
-                                <p>{% for member in room_members %}{{ member._id.username }},{% endfor %}</p>
-                            </div>
-                        </div>
-                        <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
-                        <div class="action_menu">
-                            <ul>
-                                <li id="load_older_messages_btn"><i class="fas fa-plus"></i> Load Older Messages</li>
-                            </ul>
-                        </div>
+    <div class="chat widthing-2 ">
+        <div class="card h-100">
+            <div class="card-header msg_head">
+                <div class="d-flex bd-highlight">
+                    <div class="img_cont">
+                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+                        <span class="online_icon"></span>
                     </div>
-                    <div class="card-body msg_card_body" id="messages">
-                    </div>
-                    <div class="card-footer">
-                        <form id="message_input_form">
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
-                                </div>
-                                <textarea id="message_input" class="form-control type_msg" placeholder="Type your message..."></textarea>
-                                <div class="input-group-append">
-                                    <button type="submit"><span class="input-group-text send_btn"></button><i class="fas fa-location-arrow"></i></span>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="user_info">
+                        <span>{{room.name}}</span>
+                        <p></p>
                     </div>
                 </div>
+                <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+                <div class="action_menu">
+                    <ul>
+                        <button id="load_older_messages_btn"><li><i class="fas fa-user-circle"></i> View profile</li></button>
+                    </ul>
+                </div>
             </div>
+            <div class="card-body msg_card_body" id="messages"></div>
+            <div class="card-footer">
+                <form id="message_input_form">
+                    <div class="input-group">
+                        <textarea name="" class="form-control type_msg" placeholder="Type your message..." id="message_input"></textarea>
+                        <div class="input-group-append">
+                            <input type="submit" class="input-group-text send_btn"></div>
+                    </div>
+            </div>
+            </form>
         </div>
-    </div> -->
+    </div>
+    </div>
+
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
@@ -408,36 +401,31 @@
         if (username === "{{ username }}") {
             newNode.classList += 'justify-content-end';
             newNode.innerHTML = `
-                            <div class="msg_cotainer_send">
-                                ${message}
-                                <span class="msg_time_send">
-                                    ${created_at}
-                                </span>
-                            </div>
-                            <div class="img_cont_msg">
-                                <img src="/static/img/logo-img.png"
-                                    class="rounded-circle user_img_msg">
-                            </div>
-                        </div>`;
+                    <div class="msg_cotainer_send">
+                        <font size="2"><i><b>${username}</b></i>: </font> ${message}
+                        <span class="msg_time_send">${created_at}</span>
+                    </div>
+                    <div class="img_cont_msg">
+                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                            class="rounded-circle user_img_msg">
+                    </div>`;
         } else {
             newNode.classList += 'justify-content-start';
             newNode.innerHTML = `
-                            <div class="img_cont_msg">
-                                <img src="/static/img/logo-img.png" class="rounded-circle user_img_msg">
-                            </div>
-                            <div class="msg_cotainer">
-                                ${message}
-                                <span class="msg_time">${created_at}</span>
-                            </div>`
+                    <div class="img_cont_msg">
+                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                    </div>
+                    <div class="msg_cotainer">
+                        <font size="2"><i><b>${username}</b></i>: </font> ${message}
+                        <span class="msg_time">${created_at}</span>
+                    </div>`
         }
         const messages_div = document.getElementById('messages');
         messages_div.insertBefore(newNode, messages_div.firstChild);
+        console.log(messages_div);
+
 
     }
-
-
-
-
 
     window.onbeforeunload = function() {
         socket.emit('leave_room', {
@@ -452,26 +440,21 @@
         newNode.classList += 'mb-4 ';
         if (data.username === "{{ username }}") {
             newNode.classList += 'justify-content-end';
-            newNode.innerHTML = `
-                            <div class="msg_cotainer_send">
-                                ${data.message}
-                                <span class="msg_time_send">
-                                    ${data.created_at}
-                                </span>
-                            </div>
-                            <div class="img_cont_msg">
-                                <img src="/static/img/logo-img.png"
-                                    class="rounded-circle user_img_msg">
-                            </div>
-                        </div>`;
+            newNode.innerHTML = `<div class="msg_cotainer_send">
+                                    <font size="2"><i><b>${data.username}</b></i>: </font> ${data.message}
+                                    <span class="msg_time_send">${data.created_at}</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                                </div>`;
         } else {
             newNode.classList += 'justify-content-start';
             newNode.innerHTML = `
                             <div class="img_cont_msg">
-                                <img src="/static/img/logo-img.png" class="rounded-circle user_img_msg">
+                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
                             </div>
                             <div class="msg_cotainer">
-                                ${data.message}
+                                <font size="2"><i><b>${data.username}</b></i>: </font> ${data.message}
                                 <span class="msg_time">${data.created_at}</span>
                             </div>`
         }
