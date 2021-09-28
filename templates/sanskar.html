@@ -6,7 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="google-site-verification" content="M9eEjJT2WuUDdeO1YiBXEJIDWNGnM8_ZJu4_NSCsVaY" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -171,125 +170,30 @@
             padding-right: 25px;
             padding-top: 10px;
             padding-bottom: 10px;
-            font-size: 20px;
-            font-weight: 500;
-            cursor: pointer;
-        }
-        
-        .sec-one {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: row;
-        }
-        
-        .sec-one * {
-            margin: 5px;
-        }
-        
-        .sec-two {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: row;
-        }
-        
-        .sec-two * {
-            width: 33vw;
-        }
-        
-        .m-10 {
-            margin: 10px;
-        }
-        
-        @media screen and (max-width: 628px) {
-            .sec-one {
-                flex-direction: column;
-            }
-            .sec-two {
-                flex-direction: column;
-            }
-            .sec-two * {
-                width: 100vw;
-            }
         }
     </style>
 </head>
 
 <body>
-    <div class="header">
-        <a href="/" class="logo">Chatoos</a>
+    <div align="right" class="header">
+        <a style="padding-right: 1450px;" style="font: x-large;" href="/" class="logo">Chatoos</a>
         <div class="header-right">
-            <a class="active" href="/">Home</a> {% if current_user.is_authenticated %}
-            <a href="/create-room">New Room</a>
-            <a href="logout">Logout</a> {% else %}
-            <a href="/login">Login</a>
-            <a href="/signup">Signup</a> {%endif%}
+            <a style="padding-left: 15px;" class="active" href="/">Home</a>
+            <a style="padding-left: 15px;" href="/login">Login</a>
+            <a style="padding-left: 15px;" href="/signup">Signup</a>
         </div>
     </div>
+    <br><br>
+    <h1 align="center">Welcome to Chatoos</h1>
+    <h2 align="center">"May anyone who enter as guestss leave as friends" :)</h2>
 
-    {% if current_user.is_authenticated %}
-    <div class="w-100">
-        <div class="flexicity w-100">
-            <div class="chat widthing-1">
-                <div class="card  contacts_card h-100">
-                    <div class="card-header">
-                        <div class="input-group">
-                            <input type="text" placeholder="Search..." name="" class="form-control search">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body contacts_body">
-                        <ui class="contacts">
-                            {% for room in rooms %}
-                            <li>
-                                <div class="d-flex bd-highlight">
-                                    <div class="img_cont">
-                                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                                    </div>
-                                    <div class="user_info">
-                                        <span><a href="/rooms/{{ room._id.room_id }}" class="white">{{ room.room_name }}</a></span>
-                                    </div>
-                                </div>
-                            </li>
-                            {% endfor %}
-                        </ui>
-                    </div>
-                    <div class="card-footer"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% else %}
+    <br><i><h4 align="center">Meet your friends in a very friendly environment <br> LogIn to access the features!</i><img src="/static/img/home_page/Image20210928184631.png" style="margin-right: 70px; margin-left: 70px;" alt="Chatting with friends" width="300"
+        height="200"><br><a href="/login"><button align="center" >Login</button></a><a href="/signup"><button class="active">GET STARTED</button></a></h4>
 
-    <h1 align="center" class="m-10">Welcome to Chatoos</h1>
-    <h2 align="center">"May anyone who enter as guests leave as friends" :)</h2>
-
-    <i>
-        <h4 align="center">Meet your friends in a very friendly environment <br> LogIn to access the features!
-        </h4>
-    </i>
-    <div class="sec-one">
-        <img src="/static/img/home_page/Image20210928184631.png" style="width: 40vw; margin-right: 70px; margin-left: 70px;" alt="Chatting with friends">
-
-        <a href="/login">
-            <button align="center">Login
-        </button>
-        </a>
-        <a href="/signup">
-            <button class="active">GET STARTED
-        </button>
-        </a>
-    </div>
-    <hr style="margin: 0px 30px 0px 30px;">
-    <div class="sec-two">
-        <img src="/static/img/home_page/Image20210928184543.png" alt="Internet Connectivity Issue">
-        <img src="/static/img/home_page/Image20210928184605.png" alt="Internet Connectivity Issue">
-        <img src="/static/img/home_page/Image20210928184619.png" alt="Internet Connectivity Issue">
-    </div>
-    {%endif%}
+    <br><br>
+    <img src="/static/img/home_page/Image20210928184543.png" style="margin-right: 70px; margin-left: 30px;" alt="Chatting with friends">
+    <img src="/static/img/home_page/Image20210928184605.png" style="margin-right: 70px; margin-left: 70px;" alt="Chatting with friends">
+    <img src="/static/img/home_page/Image20210928184619.png" style="margin-right: 30px; margin-left: 10px;" alt="Chatting with friends">
 
 </body>
 
