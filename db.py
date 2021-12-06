@@ -13,13 +13,12 @@ rooms_collection = chat_db.get_collection("rooms")
 room_members_collection = chat_db.get_collection("room_members")
 messages_collection = chat_db.get_collection("messages")
 
-def save_user(username, email, password):
-    password_hash = generate_password_hash(password)
-    users_collection.insert_one({'_id':username, 'email': email, 'password':password_hash})
+def save_user(username):
+    users_collection.insert_one({'_id':username})
 
 def get_user(username):
     user_data = users_collection.find_one({'_id':username})
-    return User(user_data['_id'],user_data['email'],user_data['password']) if user_data else None
+    return User(user_data['_id']) if user_data else None
 
 def save_room(room_name, created_by):
     room_id = rooms_collection.insert_one({'name':room_name, 'created_by': created_by, 'created_at':datetime.now()}).inserted_id
