@@ -76,6 +76,7 @@ def callback():
     try:
         save_user(id_info.get("email"))
         login_user(get_user(id_info.get("email")))
+        
     except DuplicateKeyError:
         login_user(get_user(id_info.get("email")))
     return redirect(url_for('home'))
