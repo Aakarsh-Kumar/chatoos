@@ -74,7 +74,7 @@ def callback():
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
     try:
-        save_user(id_info.get("email"))
+        save_user(id_info.get("email"),id_info.get("name"))
         login_user(get_user(id_info.get("email")))
         
     except DuplicateKeyError:

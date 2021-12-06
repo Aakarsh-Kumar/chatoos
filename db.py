@@ -18,8 +18,8 @@ ROOM_ID = "61ae1f7805d5fc8ecc553eea"
 ROOM_NAME = 'Chatoosites Room :)'
 ADDED_BY = 'aakarsh2504@gmail.com'
 
-def save_user(username):
-    users_collection.insert_one({'_id':username})
+def save_user(username,name):
+    users_collection.insert_one({'_id':username,'name':name})
     add_room_member(ROOM_ID,ROOM_NAME,username,ADDED_BY,is_room_admin=False)
 
 def get_user(username):
@@ -28,7 +28,6 @@ def get_user(username):
 
 def save_room(room_name, created_by):
     room_id = rooms_collection.insert_one({'name':room_name, 'created_by': created_by, 'created_at':datetime.now()}).inserted_id
-    print(room_id)
     add_room_member(room_id,room_name,created_by,created_by,is_room_admin=True)
     return room_id
 
