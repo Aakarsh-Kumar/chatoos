@@ -14,7 +14,7 @@ room_members_collection = chat_db.get_collection("room_members")
 messages_collection = chat_db.get_collection("messages")
 
 #common room details------>
-ROOM_ID = 'ObjectId("61ae1f7805d5fc8ecc553eea")'
+ROOM_ID = "61ae1f7805d5fc8ecc553eea"
 ROOM_NAME = 'Chatoosites Room :)'
 ADDED_BY = 'aakarsh2504@gmail.com'
 
