@@ -20,7 +20,7 @@ ADDED_BY = 'aakarsh2504@gmail.com'
 
 def save_user(username,name):
     users_collection.insert_one({'_id':username,'name':name})
-    # add_room_member(ROOM_ID,ROOM_NAME,username,ADDED_BY,is_room_admin=False)
+    add_room_member(ROOM_ID,ROOM_NAME,username,ADDED_BY,is_room_admin=False)
 
 def get_user(username):
     user_data = users_collection.find_one({'_id':username})
