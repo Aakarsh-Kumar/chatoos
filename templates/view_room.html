@@ -375,7 +375,7 @@
         }
     }).then(response => {
         response.json().then(messages => {
-            messages.reverse().forEach(message => prepend_message(message.text, message.name, message.sender, message.created_at));
+            messages.reverse().forEach(message => prepend_message(message.text, message.sender_name, message.sender, message.created_at));
         })
     })
 
@@ -390,7 +390,7 @@
             }
         }).then(response => {
             response.json().then(messages => {
-                messages.reverse().forEach(message => prepend_message(message.text, message.name, message.sender, message.created_at));
+                messages.reverse().forEach(message => prepend_message(message.text, message.sender_name, message.sender, message.created_at));
             })
         })
     };
@@ -403,7 +403,7 @@
             newNode.classList += 'justify-content-end';
             newNode.innerHTML = `
                     <div class="msg_cotainer_send">
-                        <font size="2">b>${name}<i>(${username})</b></i>: </font> ${message}
+                        <font size="2"<b>${name}<i>(${username})</b></i>: </font> ${message}
                         <span class="msg_time_send">${created_at}</span>
                     </div>
                     <div class="img_cont_msg">
