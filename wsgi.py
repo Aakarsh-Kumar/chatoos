@@ -22,6 +22,8 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
 GOOGLE_CLIENT_ID = "722263076239-mrqd0m23c58kr9j3ntttgi8ns5k0lnh7.apps.googleusercontent.com"
 client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
 
