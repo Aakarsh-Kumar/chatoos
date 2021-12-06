@@ -20,11 +20,11 @@ ADDED_BY = 'aakarsh2504@gmail.com'
 
 def save_user(username,name):
     users_collection.insert_one({'_id':username,'name':name})
-    add_room_member(ROOM_ID,ROOM_NAME,username,ADDED_BY,is_room_admin=False)
+    # add_room_member(ROOM_ID,ROOM_NAME,username,ADDED_BY,is_room_admin=False)
 
 def get_user(username):
     user_data = users_collection.find_one({'_id':username})
-    return User(user_data['_id']) if user_data else None
+    return User(user_data['_id'],user_data['name'],) if user_data else None
 
 def save_room(room_name, created_by):
     room_id = rooms_collection.insert_one({'name':room_name, 'created_by': created_by, 'created_at':datetime.now()}).inserted_id

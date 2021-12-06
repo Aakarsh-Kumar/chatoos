@@ -1,8 +1,9 @@
 from werkzeug.security import check_password_hash
 
 class User:
-    def __init__(self,username):
+    def __init__(self,username,name):
         self.username = username
+        self.name = name
 
     @staticmethod
     def is_authenticated(self):
