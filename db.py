@@ -59,8 +59,8 @@ def is_room_member(room_id,username):
 def is_room_admin(room_id,username):
     return room_members_collection.count_documents({'_id':{'room_id':ObjectId(room_id),'username':username},'is_room_admin':True})
 
-def save_message(room_id,text,sender):
-    messages_collection.insert_one({'room_id':room_id,'text':text,'sender':sender, 'created_at':datetime.now(timezone('Asia/Kolkata'))})
+def save_message(room_id,text,sender_name,sender):
+    messages_collection.insert_one({'room_id':room_id,'text':text,'sender_name':sender_name,'sender':sender, 'created_at':datetime.now(timezone('Asia/Kolkata'))})
 
 MESSAGE_FETCH_LIMIT = 3
 

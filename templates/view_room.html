@@ -375,7 +375,7 @@
         }
     }).then(response => {
         response.json().then(messages => {
-            messages.reverse().forEach(message => prepend_message(message.text, message.sender, message.created_at));
+            messages.reverse().forEach(message => prepend_message(message.text, message.name, message.sender, message.created_at));
         })
     })
 
@@ -390,12 +390,12 @@
             }
         }).then(response => {
             response.json().then(messages => {
-                messages.reverse().forEach(message => prepend_message(message.text, message.sender, message.created_at));
+                messages.reverse().forEach(message => prepend_message(message.text, message.name, message.sender, message.created_at));
             })
         })
     };
 
-    function prepend_message(message, username, created_at) {
+    function prepend_message(message, name, username, created_at) {
         const newNode = document.createElement('div');
         newNode.classList += 'd-flex ';
         newNode.classList += 'mb-4 ';
@@ -403,7 +403,8 @@
             newNode.classList += 'justify-content-end';
             newNode.innerHTML = `
                     <div class="msg_cotainer_send">
-                        <font size="2"><i><b>${username}</b></i>: </font> ${message}
+                        <b>${data.name}<i>(${data.username})</b></i>
+                        <font size="2">b>${name}<i>(${username})</b></i>: </font> ${message}
                         <span class="msg_time_send">${created_at}</span>
                     </div>
                     <div class="img_cont_msg">
@@ -417,7 +418,7 @@
                         <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
                     </div>
                     <div class="msg_cotainer">
-                        <font size="2"><i><b>${username}</b></i>: </font> ${message}
+                        <font size="2"><b>${name}<i>(${username})</b></i>: </font> ${message}
                         <span class="msg_time">${created_at}</span>
                     </div>`
         }
@@ -442,7 +443,7 @@
         if (data.username === "{{ username }}") {
             newNode.classList += 'justify-content-end';
             newNode.innerHTML = `<div class="msg_cotainer_send">
-                                    <font size="2"><i><b>${data.name}</b></i>: </font> ${data.message}
+                                    <font size="2"><b>${data.name}<i>(${data.username})</b></i>: </font> ${data.message}
                                     <span class="msg_time_send">${data.created_at}</span>
                                 </div>
                                 <div class="img_cont_msg">
@@ -455,7 +456,7 @@
                                 <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
                             </div>
                             <div class="msg_cotainer">
-                                <font size="2"><i><b>${data.name}</b></i>: </font> ${data.message}
+                                <font size="2"><b>${data.name}<i>(${data.username})</b></i>: </font> ${data.message}
                                 <span class="msg_time">${data.created_at}</span>
                             </div>`
         }
@@ -467,7 +468,7 @@
     socket.on('join_room_announcement', function(data) {
         if (data.username !== "{{ username }}") {
             const newNode = document.createElement('div');
-            newNode.innerHTML = `<b>${data.username}</b> has joined the room`;
+            newNode.innerHTML = `<b>${data.name}<i>(${data.username})</b></i> has joined the room`;
             document.getElementById('messages').appendChild(newNode);
         }
     });
@@ -475,7 +476,7 @@
     socket.on('leave_room_announcement', function(data) {
         console.log(data);
         const newNode = document.createElement('div');
-        newNode.innerHTML = `<b>${data.username}</b> has left the room`;
+        newNode.innerHTML = `<b>${data.name}<i>(${data.username})</b></i> has left the room`;
         document.getElementById('messages').appendChild(newNode);
     });
 </script>

@@ -170,7 +170,7 @@ def handle_join_room_event(data):
 @socketio.on('send_message')
 def handle_send_message_event(data):
     data['created_at'] = datetime.now().strftime("%d %b, %H:%M")
-    save_message(data['room'],data['message'],data['username'])
+    save_message(data['room'],data['message'],data['name'],data['username'])
     socketio.emit('receive_message',data,room=data['room'])
 
 @socketio.on('leave_room')
