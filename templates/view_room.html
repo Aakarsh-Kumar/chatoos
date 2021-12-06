@@ -424,7 +424,6 @@
         }
         const messages_div = document.getElementById('messages');
         messages_div.insertBefore(newNode, messages_div.firstChild);
-        console.log(messages_div);
 
 
     }
@@ -475,7 +474,6 @@
     });
 
     socket.on('leave_room_announcement', function(data) {
-        console.log(data);
         const newNode = document.createElement('div');
         newNode.innerHTML = `<b>${data.name}<i>(${data.username})</b></i> has left the room`;
         document.getElementById('messages').appendChild(newNode);
