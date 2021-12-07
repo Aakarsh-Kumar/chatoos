@@ -296,7 +296,8 @@
         <div class="header-right">
             <a href="/">Home</a>
             <a href="/create-room">New Room</a>
-            <a class="active" href="/rooms/{{ room._id }}/edit">Edit Room</a>
+            <a class="active" href="/rooms/{{ room._id }}/members">Members</a>
+            <a href="/rooms/{{ room._id }}/edit">Edit Room</a>
             <a href="/logout">Logout</a>
         </div>
     </div>
@@ -317,7 +318,10 @@
                 <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
                 <div class="action_menu">
                     <ul>
-                        <button id="load_older_messages_btn"><li><i class="fas fa-user-circle"></i> Chat History</li></button>
+                        <button id="load_older_messages_btn"><li><i class="fas fa-user-circle"></i> Load Messages</li></button>
+                    </ul>
+                    <ul>
+                        <button id="leave_btn"><li><i class="fas fa-user-circle"></i> Leave Room</li></button>
                     </ul>
                 </div>
             </div>
@@ -396,6 +400,16 @@
         })
     };
 
+    document.getElementById("leave_btn").onclick = (e) => {
+        window.location.href = '/';
+        $('.action_menu').toggle();
+        socket.emit('exit_room', {
+            username: "{{ username }}",
+            name: "{{ name  }}",
+            room: "{{ room._id }}"
+        })
+    };
+
     function prepend_message(message, name, username, created_at) {
         const newNode = document.createElement('div');
         newNode.classList += 'd-flex ';
@@ -468,14 +482,37 @@
     socket.on('join_room_announcement', function(data) {
         if (data.username !== "{{ username }}") {
             const newNode = document.createElement('div');
-            newNode.innerHTML = `<b>${data.name}<i>(${data.username})</b></i> has joined the room`;
+            newNode.innerHTML = `<b>${data.name}<i>(${data.username})</b></i> connected to room.`;
             document.getElementById('messages').appendChild(newNode);
         }
     });
 
     socket.on('leave_room_announcement', function(data) {
         const newNode = document.createElement('div');
-        newNode.innerHTML = `<b>${data.name}<i>(${data.username})</b></i> has left the room`;
+        newNode.innerHTML = `<b>${data.name}<i>(${data.username})</b></i> disconnected from room.`;
+        document.getElementById('messages').appendChild(newNode);
+    });
+
+    socket.on('exit_room_announcement', function(data) {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${data.name}<i>(${data.username})</b></i> left the room.`;
+        document.getElementById('messages').appendChild(newNode);
+    });
+
+    socket.on('add_room_announcement', function(data) {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${data}</b></i> added to room.`;
+        document.getElementById('messages').appendChild(newNode);
+    });
+    fresh_add_room__announcement
+    socket.on('fresh_add_room_announcement', function(data) {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${data}</b></i> joined Chatoos.`;
+        document.getElementById('messages').appendChild(newNode);
+    });
+    socket.on('remove_room_announcement', function(data) {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${data}</b></i> removed from room.`;
         document.getElementById('messages').appendChild(newNode);
     });
 </script>

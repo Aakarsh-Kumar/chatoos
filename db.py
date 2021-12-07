@@ -14,13 +14,12 @@ room_members_collection = chat_db.get_collection("room_members")
 messages_collection = chat_db.get_collection("messages")
 
 #common room details------>
-ROOM_ID = "61ae467bb6a11c8081af8a59"
+ROOM_ID = "61af2c296ba72749c366fd47"
 ROOM_NAME = 'Chatoosites Room :)'
 ADDED_BY = 'aakarsh2504@gmail.com'
 
 def save_user(username,name):
     users_collection.insert_one({'_id':username,'name':name})
-    add_room_member(ROOM_ID,ROOM_NAME,username,ADDED_BY,is_room_admin=False)
 
 def get_user(username):
     user_data = users_collection.find_one({'_id':username})
