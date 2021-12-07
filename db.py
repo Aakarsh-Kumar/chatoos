@@ -18,12 +18,15 @@ ROOM_ID = "61af2c296ba72749c366fd47"
 ROOM_NAME = 'Chatoosites Room :)'
 ADDED_BY = 'aakarsh2504@gmail.com'
 
-def save_user(username,name):
-    users_collection.insert_one({'_id':username,'name':name})
+def get_users():
+    return list(users_collection.find())
+
+def save_user(username,name,dp_url):
+    users_collection.insert_one({'_id':username,'name':name,'dp_url':dp_url})
 
 def get_user(username):
     user_data = users_collection.find_one({'_id':username})
-    return User(user_data['_id'],user_data['name'],) if user_data else None
+    return User(user_data['_id'],user_data['name'],user_data['dp_url']) if user_data else None
 
 def save_room(room_name, created_by):
     room_id = rooms_collection.insert_one({'name':room_name, 'created_by': created_by, 'created_at':datetime.now()}).inserted_id
@@ -58,8 +61,8 @@ def is_room_member(room_id,username):
 def is_room_admin(room_id,username):
     return room_members_collection.count_documents({'_id':{'room_id':ObjectId(room_id),'username':username},'is_room_admin':True})
 
-def save_message(room_id,text,sender_name,sender):
-    messages_collection.insert_one({'room_id':room_id,'text':text,'sender_name':sender_name,'sender':sender, 'created_at':datetime.now(timezone('Asia/Kolkata'))})
+def save_message(room_id,text,sender_name,sender,dp_url):
+    messages_collection.insert_one({'room_id':room_id,'text':text,'sender_name':sender_name,'sender':sender, 'dp_url':dp_url,'created_at':datetime.now(timezone('Asia/Kolkata'))})
 
 MESSAGE_FETCH_LIMIT = 3
 

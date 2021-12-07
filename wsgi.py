@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask_login.utils import login_required, login_user, logout_user, current_user
-from db import add_room_member,add_room_members, get_messages, get_room, get_room_members, get_rooms_for_user, get_user, is_room_member, remove_room_members, save_message, save_room,save_user, is_room_admin, update_room
+from db import add_room_member,add_room_members, get_messages, get_room, get_room_members, get_rooms_for_user, get_user, get_users, is_room_member, remove_room_members, save_message, save_room,save_user, is_room_admin, update_room
 from bson.json_util import dumps
 from flask import Flask, render_template, redirect, request, url_for,session, abort
 from flask_socketio import SocketIO,socketio, join_room, leave_room
@@ -80,7 +80,7 @@ def callback():
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
     try:
-        save_user(id_info.get("email"),id_info.get("name"))
+        save_user(id_info.get("email"),id_info.get("name"),id_info.get("picture"))
         add_room_member(ROOM_ID,ROOM_NAME,id_info.get("email"),ADDED_BY,is_room_admin=False)
         socketio.emit('fresh_add_room_announcement',id_info.get("email"),room=ROOM_ID)
         login_user(get_user(id_info.get("email")))
@@ -119,11 +119,12 @@ def create_room():
 @app.route('/rooms/<room_id>')
 @login_required
 def view_room(room_id):
+    print(room_id)
     room = get_room(room_id)
     if room and is_room_member(room_id,current_user.username):
         room_members = get_room_members(room_id)
         messages = get_messages(room_id)
-        return render_template('view_room.html',name =current_user.name ,username=current_user.username, room=room, room_members=room_members, messages=messages)
+        return render_template('view_room.html',name =current_user.name ,username=current_user.username, dp_url=current_user.dp_url,room=room, room_members=room_members, messages=messages)
     else:
         return "Room not found", 404
 
@@ -143,13 +144,27 @@ def get_older_messages(room_id):
 @login_required
 def room_members(room_id):
     room_members_temp_lst = []
+    room_members_name_temp_lst = []
+    room_members_dp_temp_lst = []
+    room_members_username_temp_lst = []
+    room_members_lst = []
     room = get_room(room_id)
     if room and is_room_member(room_id,current_user.username):
         room_members = get_room_members(room_id)
         for room_member in room_members:
             room_members_temp_lst.append(room_member['_id']['username'])
         
-        return render_template("members.html",room_members=room_members_temp_lst, room_id=room_id)
+        for i in get_users():
+            if i['_id'] in room_members_temp_lst:
+                room_members_username_temp_lst.append(i['_id'])
+                room_members_name_temp_lst.append(i['name'])
+                room_members_dp_temp_lst.append(i['dp_url'])
+        for j in range(0,len(room_members_temp_lst)):
+            print(room_members_name_temp_lst[j])
+            print(room_members_temp_lst[j])
+            room_members_lst.append({'username':room_members_username_temp_lst[j][0:5]+'...@'+room_members_temp_lst[j].split('@')[1],'name':room_members_name_temp_lst[j],'dp_url':room_members_dp_temp_lst[j]})
+        print(room_members_lst)     
+        return render_template("members.html",room_members=room_members_lst, room_id=room_id)
     else:
         return "Room not found", 404
 
@@ -194,7 +209,7 @@ def handle_join_room_event(data):
 @socketio.on('send_message')
 def handle_send_message_event(data):
     data['created_at'] = datetime.now().strftime("%d %b, %H:%M")
-    save_message(data['room'],data['message'],data['name'],data['username'])
+    save_message(data['room'],data['message'],data['name'],data['username'],data['dp_url'])
     socketio.emit('receive_message',data,room=data['room'])
 
 @socketio.on('leave_room')

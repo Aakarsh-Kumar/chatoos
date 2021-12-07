@@ -237,8 +237,11 @@
                             {% for member in room_members %}
                             <li>
                                 <div class="d-flex bd-highlight">
+                                    <div class="img_cont">
+                                        <img src="{{ member.dp_url }}" class="rounded-circle user_img">
+                                    </div>
                                     <div class="user_info" style="margin-left: 15px;">
-                                        <span><a class="white">{{ member }}</a></span>
+                                        <span><a class="white">{{ member.name }} ({{ member.username }})</a></span>
                                     </div>
                                 </div>
                             </li>
