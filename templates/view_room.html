@@ -504,7 +504,6 @@
         newNode.innerHTML = `<b>${data}</b></i> added to room.`;
         document.getElementById('messages').appendChild(newNode);
     });
-    fresh_add_room__announcement
     socket.on('fresh_add_room_announcement', function(data) {
         const newNode = document.createElement('div');
         newNode.innerHTML = `<b>${data}</b></i> joined Chatoos.`;
