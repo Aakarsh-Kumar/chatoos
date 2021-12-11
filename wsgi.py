@@ -2,7 +2,7 @@ from datetime import datetime
 from flask_login.utils import login_required, login_user, logout_user, current_user
 from db import add_room_member,add_room_members, get_messages, get_room, get_room_members, get_rooms_for_user, get_user, get_users, is_room_member, remove_room_members, save_message, save_room,save_user, is_room_admin, update_room
 from bson.json_util import dumps
-from flask import Flask, render_template, redirect, request, url_for,session, abort
+from flask import Flask, render_template, redirect, request, url_for,session, abort, make_response, send_from_directory
 from flask_socketio import SocketIO,socketio, join_room, leave_room
 from flask_login import LoginManager
 from pymongo.errors import DuplicateKeyError
@@ -201,6 +201,14 @@ def edit_room(room_id):
     else:
         return "You are not the admin!", 404
 
+# Push Notification using google
+@app.route('/sw.js')
+def sw():
+    response = make_response(send_from_directory('static','','sw.js'))
+    response.headers['Content-Type'] = 'application/javascript'
+    return response
+
+
 @socketio.on('join_room')
 def handle_join_room_event(data):
     join_room(data['room'])
@@ -232,5 +240,5 @@ def error_404(e):
     return "404 Not Found"
 
 if __name__ == '__main__':
-    # socketio.run(app,debug=True, host="127.0.0.1", port=5000)
+    # socketio.run(app,debug=True, host="127.0.0.1", port=80)
     app.run()
