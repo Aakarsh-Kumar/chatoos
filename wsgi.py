@@ -14,6 +14,7 @@ import os
 import pathlib
 import requests
 from pywebpush import webpush, WebPushException
+import json
 
 
 app = Flask(__name__,template_folder='templates')
@@ -237,11 +238,13 @@ def handle_send_message_event(data):
     for mem in mem_lst:
         print(mem['_id']['username'])
         i = get_user(mem['_id']['username'])
-        print(type(getattr(i,'notification_token')))
+        print(getattr(i,'notification_token'))
+        print(type(json.loads(getattr(i,'notification_token'))))
+        print(json.loads(getattr(i,'notification_token')))
         if getattr(i,'notification_status')=="true":
             try:
                 webpush(
-                    subscription_info=dict(getattr(i,'notification_token')),
+                    subscription_info=json.loads(getattr(i,'notification_token')),
                     data="sw",
                     vapid_private_key="qPtzikLbqBfZw9qGj8HlvzU7WHfltLQUxrMTH7RE7Wg",
                     vapid_claims={
