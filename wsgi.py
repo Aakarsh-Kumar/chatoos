@@ -237,11 +237,11 @@ def handle_send_message_event(data):
     for mem in mem_lst:
         print(mem['_id']['username'])
         i = get_user(mem['_id']['username'])
-        print(i)
-        if i.notification_status==True:
+        print(getattr(i,'notification_status'))
+        if getattr(i,'notification_status')==True:
             try:
                 webpush(
-                    subscription_info=i.notification_token,
+                    subscription_info=getattr(i,'notification_token'),
                     data="sw",
                     vapid_private_key="qPtzikLbqBfZw9qGj8HlvzU7WHfltLQUxrMTH7RE7Wg",
                     vapid_claims={
