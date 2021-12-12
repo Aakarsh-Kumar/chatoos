@@ -386,7 +386,8 @@
                 });
         }
 
-        document.getElementById('notification-data-form').addEventListener('submit', function(event) {
+        const notification_data_form = document.getElementById('notification-data-form');
+        notification_data_form.addEventListener('submit', function(event) {
             console.log('notification-data-form');
             event.preventDefault();
         });
