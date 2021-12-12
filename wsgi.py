@@ -234,8 +234,8 @@ def handle_join_room_event(data):
 def handle_send_message_event(data):
     data['created_at'] = datetime.now().strftime("%d %b, %H:%M")
     mem_lst = get_room_members(data['room'])
-    print(mem_lst)
     for mem in mem_lst:
+        print(mem['_id']['room_id'])
         i = get_user(mem['_id']['room_id'])
         print(i+" aakarsh")
         if i.notification_status==True:
