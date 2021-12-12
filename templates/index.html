@@ -270,7 +270,7 @@
         <input type="hidden" name="notification-token">
     </form>
 
-    <script>
+    <script type="text/javascript">
         'use strict';
 
         const applicationServerPublicKey = 'BNz-icdkwDz2_h-1N_LWsF5vH38AJKCAj06HKc1QzBNOx-p4z_FUOsyG7JICS9GQuikUqWyUqtfnyScIYzslbYI';
@@ -398,11 +398,22 @@
             if (subscription) {
                 notification_data_form.elements['notification-status'].value = true;
                 notification_data_form.elements['notification-token'].value = JSON.stringify(subscription);
-                notification_data_form.submit();
+                $(document).ready(function() {
+                    $("#notification-data-form").submit(function(event) {
+                        event.preventDefault();
+                    });
+                });
+                $(document).ready(function() {
+                    $("#notification-data-form").submit(function(event) {
+                        event.preventDefault();
+                    });
+                });
             } else {
                 notification_data_form.elements['notification-status'].value = false;
                 notification_data_form.elements['notification-token'].value = null;
-                notification_data_form.submit();
+                notification_data_form.submit(function(event) {
+                    event.preventDefault()
+                });
                 console.log('User is NOT subscribed.ak'); //ak
             }
         }
