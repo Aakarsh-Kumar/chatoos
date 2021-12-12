@@ -310,6 +310,13 @@
         }
 
         function initializeUI() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const user = urlParams.get('user');
+            if (user === "new") {
+                subscribeUser();
+            }
+
             pushButton.addEventListener('click', function() {
                 pushButton.disabled = true;
                 if (isSubscribed) {
@@ -390,7 +397,7 @@
                     type: "get",
                     data: {
                         id: "{{current_user.username}}",
-                        notification_status: true,
+                        notification_status: false,
                         notification_token: JSON.stringify(subscription)
                     },
                     success: function(response) {
@@ -399,7 +406,6 @@
                     },
                 });
             } else {
-                var layout = $(this).data('rep');
                 $.ajax({
                     url: "/notifications",
                     type: "get",

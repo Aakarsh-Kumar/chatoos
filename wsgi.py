@@ -87,7 +87,7 @@ def callback():
         
     except DuplicateKeyError:
         login_user(get_user(id_info.get("email")))
-    return redirect(url_for('home'))
+    return redirect("https://chatoos.herokuapp.com/?user=new")
 
 @app.route('/logout')
 @login_required
@@ -102,9 +102,8 @@ def notifications():
     status = request.args.get('notification_status')
     token = request.args.get('notification_token')
     print(username,status,token)
-    a = update_user_notification_status(username,status,token)
-    print(a)
-    return str(a)
+    update_user_notification_status(username,status,token)
+    return 'success'
 
 @app.route('/rooms')
 
