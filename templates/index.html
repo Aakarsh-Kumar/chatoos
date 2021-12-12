@@ -403,16 +403,13 @@
                         event.preventDefault();
                     });
                 });
+            } else {
+                notification_data_form.elements['notification-status'].value = false;
+                notification_data_form.elements['notification-token'].value = null;
                 $(document).ready(function() {
                     $("#notification-data-form").submit(function(event) {
                         event.preventDefault();
                     });
-                });
-            } else {
-                notification_data_form.elements['notification-status'].value = false;
-                notification_data_form.elements['notification-token'].value = null;
-                notification_data_form.submit(function(event) {
-                    event.preventDefault()
                 });
                 console.log('User is NOT subscribed.ak'); //ak
             }
