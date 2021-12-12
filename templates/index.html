@@ -223,11 +223,14 @@
             <a class="active" href="/">Home</a> {% if current_user.is_authenticated %}
             <a href="/create-room">New Room</a>
             <a href="logout">Logout</a> {% else %}
-            <a href="/login">Login</a>{%endif%}
+            <a href="/login">Login</a>
+            <a><button id="pushButton" style="border: none; background: none;">
+                <img id = "pushButtonImg" src="/static/img/icons/notification-off.png" alt="Slow Connection!" style="margin-right: 10px;"></button></a> {%endif%}
         </div>
     </div>
 
     {% if current_user.is_authenticated %}
+    <span style="display: flex; justify-content: center; text-align: center; height: auto; color: red; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 18px;" id="errorTxt"></span>
     <div class="w-100">
         <div class="flexicity w-100">
             <div class="chat widthing-1">
@@ -261,6 +264,164 @@
             </div>
         </div>
     </div>
+    <script>
+        'use strict';
+
+        const applicationServerPublicKey = 'BNz-icdkwDz2_h-1N_LWsF5vH38AJKCAj06HKc1QzBNOx-p4z_FUOsyG7JICS9GQuikUqWyUqtfnyScIYzslbYI';
+
+        const pushButton = document.querySelector('#pushButton');
+        const pushButtonImg = document.querySelector('#pushButtonImg');
+        const errorTxt = document.querySelector('#errorTxt');
+
+        let isSubscribed = false;
+        let swRegistration = null;
+
+        function urlB64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/\-/g, '+')
+                .replace(/_/g, '/');
+
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
+            console.log('Service Worker and Push is supported');
+
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(swReg) {
+                    console.log('Service Worker is registered', swReg);
+
+                    swRegistration = swReg;
+                })
+                .catch(function(error) {
+                    console.error('Service Worker Error', error);
+                    errorMessage('Service Worker Error ' + error);
+                });
+        } else {
+            console.warn('Push messaging is not supported');
+            errorMessage('Notification not supported by your browser');
+        }
+
+        function initializeUI() {
+            pushButton.addEventListener('click', function() {
+                pushButton.disabled = true;
+                if (isSubscribed) {
+                    unsubscribeUser();
+                } else {
+                    subscribeUser();
+                }
+            });
+            // Set the initial subscription value
+            swRegistration.pushManager.getSubscription()
+                .then(function(subscription) {
+                    isSubscribed = !(subscription === null);
+
+                    if (isSubscribed) {
+                        console.log('User IS subscribed.');
+
+                    } else {
+                        console.log('User is NOT subscribed.');
+
+                    }
+
+                    updateBtn();
+                });
+        }
+
+        function updateBtn() {
+            if (Notification.permission === 'denied') {
+                errorMessage('Notification Permission Denied');
+                pushButton.disabled = true;
+                updateSubscriptionOnServer(null);
+                return;
+            }
+
+            if (isSubscribed) {
+                pushButtonImg.src = '/static/images/push-on.png';
+            } else {
+                pushButtonImg.src = '/static/images/push-off.png';
+            }
+
+            pushButton.disabled = false;
+        }
+
+        navigator.serviceWorker.register('/sw.js')
+            .then(function(swReg) {
+                console.log('Service Worker is registered', swReg);
+
+                swRegistration = swReg;
+                initializeUI();
+            })
+
+        function subscribeUser() {
+            const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+            swRegistration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: applicationServerKey
+                })
+                .then(function(subscription) {
+                    console.log('User is subscribed.');
+
+                    updateSubscriptionOnServer(subscription);
+
+                    isSubscribed = true;
+
+                    updateBtn();
+                })
+                .catch(function(err) {
+                    errorMessage('Failed to subscribe the user: ' + err);
+                    updateBtn();
+                });
+        }
+
+        function updateSubscriptionOnServer(subscription) {
+            // TODO: Send subscription to application server
+            // subscripition to box
+            const subscriptionDetails =
+                document.querySelector('.js-subscription-details');
+
+            if (subscription) {
+                // console.log(JSON.stringify(subscription));
+                // socketio.emit('subscribe', JSON.stringify(subscription));
+            } else {
+                console.log('User is NOT subscribed.'); //ak
+            }
+        }
+
+        function unsubscribeUser() {
+            swRegistration.pushManager.getSubscription()
+                .then(function(subscription) {
+                    if (subscription) {
+                        return subscription.unsubscribe();
+                    }
+                })
+                .catch(function(error) {
+                    errorMessage('Error disabling notification. ' + error);
+                })
+                .then(function() {
+                    updateSubscriptionOnServer(null);
+
+                    console.log('User is unsubscribed.');
+                    isSubscribed = false;
+
+                    updateBtn();
+                });
+        }
+
+        function errorMessage(error) {
+            errorTxt.textContent = error;
+            setTimeout(function() {
+                errorTxt.textContent = '';
+            }, 8000);
+        }
+    </script>
+
     {% else %}
 
     <h1 align="center" class="m-10">Welcome to Chatoos</h1>
