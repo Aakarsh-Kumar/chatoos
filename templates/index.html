@@ -313,6 +313,7 @@
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             const user = urlParams.get('user');
+            console.log(user + 'akak');
             if (user === "new") {
                 subscribeUser();
             }
@@ -397,7 +398,7 @@
                     type: "get",
                     data: {
                         id: "{{current_user.username}}",
-                        notification_status: false,
+                        notification_status: true,
                         notification_token: JSON.stringify(subscription)
                     },
                     success: function(response) {
@@ -411,7 +412,7 @@
                     type: "get",
                     data: {
                         id: "{{current_user.username}}",
-                        notification_status: true,
+                        notification_status: false,
                         notification_token: JSON.stringify(subscription)
                     },
                     success: function(response) {
