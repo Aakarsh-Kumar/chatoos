@@ -85,9 +85,10 @@ def callback():
         socketio.emit('fresh_add_room_announcement',id_info.get("email"),room=ROOM_ID)
         login_user(get_user(id_info.get("email")))
         
+        return redirect("https://chatoos.herokuapp.com/?user=new")
     except DuplicateKeyError:
         login_user(get_user(id_info.get("email")))
-    return redirect("https://chatoos.herokuapp.com/?user=new")
+        return redirect("https://chatoos.herokuapp.com")
 
 @app.route('/logout')
 @login_required
