@@ -236,7 +236,7 @@ def handle_send_message_event(data):
     mem_lst = get_room_members(data['room'])
     print(mem_lst)
     for mem in mem_lst:
-        i = get_user(mem)
+        i = get_user(mem['_id']['room_id'])
         print(i+" aakarsh")
         if i.notification_status==True:
             try:
