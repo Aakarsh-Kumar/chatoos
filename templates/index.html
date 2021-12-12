@@ -401,11 +401,23 @@
                 $(document).ready(function() {
                     $("#notification-data-form").submit(function(event) {
                         event.preventDefault();
-                        $.post('/notifications', {
-                            "id": "{{current_user.username}}",
-                            "notification-status": true,
-                            "notification-token": JSON.stringify(subscription)
-                        })
+                        $(document).ready(function() {
+                            $("#notification-data-form").submit(function(event) {
+                                event.preventDefault();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/notifications',
+                                    data: {
+                                        "id": "{{current_user.username}}",
+                                        "notification-status": true,
+                                        "notification-token": JSON.stringify(subscription)
+                                    },
+                                    success: function() {
+                                        alert('saved');
+                                    }
+                                })
+                            });
+                        });
                     });
                 });
             } else {
@@ -414,10 +426,17 @@
                 $(document).ready(function() {
                     $("#notification-data-form").submit(function(event) {
                         event.preventDefault();
-                        $.post('/notifications', {
-                            "id": "{{current_user.username}}",
-                            "notification-status": false,
-                            "notification-token": null
+                        $.ajax({
+                            type: 'POST',
+                            url: '/notifications',
+                            data: {
+                                "id": "{{current_user.username}}",
+                                "notification-status": false,
+                                "notification-token": null
+                            },
+                            success: function() {
+                                alert('saved');
+                            }
                         })
                     });
                 });
