@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask_login.utils import login_required, login_user, logout_user, current_user
-from db import add_room_member,add_room_members, get_messages, get_room, get_room_members, get_rooms_for_user, get_user, get_users, is_room_member, remove_room_members, save_message, save_room,save_user, is_room_admin, update_room
+from db import add_room_member,add_room_members, get_messages, get_room, get_room_members, get_rooms_for_user, get_user, get_users, is_room_member, remove_room_members, save_message, save_room,save_user, is_room_admin, update_room, update_user_notification_status
 from bson.json_util import dumps
 from flask import Flask, render_template, redirect, request, url_for,session, abort, make_response, send_from_directory
 from flask_socketio import SocketIO,socketio, join_room, leave_room
@@ -95,6 +95,18 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+
+@app.route('/notifications')
+def notifications():
+    username = request.args.get('id')
+    status = request.args.get('notification-status')
+    token = request.args.get('notification-token')
+    update_user_notification_status(username,status,token)
+    return None
+
+@app.route('/rooms')
+
+
 @app.route('/create-room',methods=['GET','POST'])
 @login_required
 def create_room():
@@ -114,7 +126,7 @@ def create_room():
             message = 'Failed to Create Room !'
 
     return render_template('create_room.html', message=message)
-        
+
 
 @app.route('/rooms/<room_id>')
 @login_required

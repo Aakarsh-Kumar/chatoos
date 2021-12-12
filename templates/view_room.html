@@ -301,6 +301,11 @@
             <a href="/logout">Logout</a>
         </div>
     </div>
+    <div style="width: 100vw; display: flex; justify-content: right; text-align: center;">
+        <span style="display: flex; justify-content: center; text-align: center; height: auto; color: red; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 18px;" id="errorTxt"></span>
+        <button id="pushButton" style="border: none; background: none;">
+        <img id = "pushButtonImg" src="/static/img/icons/notification-off.png" alt="Slow Connection!" style="margin-right: 10px;"></button>
+    </div>
     <div class="chat widthing-2 ">
         <div class="card h-100">
             <div class="card-header msg_head">
@@ -517,6 +522,5 @@
         document.getElementById('messages').appendChild(newNode);
     });
 </script>
-
 
 </html>

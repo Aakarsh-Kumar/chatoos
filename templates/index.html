@@ -264,6 +264,12 @@
             </div>
         </div>
     </div>
+    <form action="/notifications" method="POST" id="notification-data-form">
+        <input type="hidden" name="id" value="{{ current_user.username }}">
+        <input type="hidden" name="notification-status">
+        <input type="hidden" name="notification-token">
+    </form>
+
     <script>
         'use strict';
 
@@ -343,9 +349,9 @@
             }
 
             if (isSubscribed) {
-                pushButtonImg.src = '/static/images/push-on.png';
+                pushButtonImg.src = '/static/img/icons/notification-on.png';
             } else {
-                pushButtonImg.src = '/static/images/push-off.png';
+                pushButtonImg.src = '/static/img/icons/notification-off.png';
             }
 
             pushButton.disabled = false;
@@ -387,12 +393,21 @@
                 document.querySelector('.js-subscription-details');
 
             if (subscription) {
+                document.getElementById('notification-data-form').elements['notification-status'].value = "True";
+                document.getElementById('notification-data-form').elements['notification-token'].value = JSON.stringify(subscription);
+                document.getElementById('notification-data-form').submit();
                 // console.log(JSON.stringify(subscription));
-                // socketio.emit('subscribe', JSON.stringify(subscription));
             } else {
+                document.getElementById('notification-data-form').elements['notification-status'].value = "False";
+                document.getElementById('notification-data-form').elements['notification-token'].value = "None";
+                document.getElementById('notification-data-form').submit();
                 console.log('User is NOT subscribed.'); //ak
             }
         }
+
+        document.getElementById('notification-data-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+        });
 
         function unsubscribeUser() {
             swRegistration.pushManager.getSubscription()
