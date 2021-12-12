@@ -96,7 +96,7 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/notifications', method=['POST'])
+@app.route('/notifications', methods=['POST'])
 def notifications():
     username = request.args.get('id')
     status = request.args.get('notification-status')
