@@ -24,7 +24,7 @@ def save_user(username,name,dp_url):
     users_collection.insert_one({'_id':username,'name':name,'dp_url':dp_url,'notification-status':None,'notification-token':None})
 
 def update_user_notification_status(username,status,token):
-    users_collection.update_one({'_id':username},{'$set':{'notification-status':status,'notification-token':token}})
+    return users_collection.update_one({'_id':username},{'$set':{'notification-status':status,'notification-token':token}})
 
 def get_user(username):
     user_data = users_collection.find_one({'_id':username})
