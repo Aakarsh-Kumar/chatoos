@@ -394,19 +394,16 @@
 
         function updateSubscriptionOnServer(subscription) {
             // TODO: Send subscription to application server
-            // subscripition to box
-            const subscriptionDetails =
-                document.querySelector('.js-subscription-details');
 
             if (subscription) {
-                document.getElementById('notification-data-form').elements['notification-status'].value = true;
-                document.getElementById('notification-data-form').elements['notification-token'].value = JSON.stringify(subscription);
-                document.getElementById('notification-data-form').submit();
+                notification_data_form.elements['notification-status'].value = true;
+                notification_data_form.elements['notification-token'].value = JSON.stringify(subscription);
+                notification_data_form.submit();
             } else {
-                document.getElementById('notification-data-form').elements['notification-status'].value = false;
-                document.getElementById('notification-data-form').elements['notification-token'].value = null;
-                document.getElementById('notification-data-form').submit();
-                console.log('User is NOT subscribed.'); //ak
+                notification_data_form.elements['notification-status'].value = false;
+                notification_data_form.elements['notification-token'].value = null;
+                notification_data_form.submit();
+                console.log('User is NOT subscribed.ak'); //ak
             }
         }
 
