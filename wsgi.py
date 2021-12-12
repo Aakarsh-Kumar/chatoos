@@ -53,7 +53,7 @@ def home():
 @app.route('/login',methods=['GET'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect("https://chatoos.herokuapp.com")
     else:
         authorization_url, state = flow.authorization_url()
         session["state"] = state
@@ -79,23 +79,23 @@ def callback():
 
     session["google_id"] = id_info.get("sub")
     session["name"] = id_info.get("name")
-    # try:
-    save_user(id_info.get("email"),id_info.get("name"),id_info.get("picture"))
-    add_room_member(ROOM_ID,ROOM_NAME,id_info.get("email"),ADDED_BY,is_room_admin=False)
-    socketio.emit('fresh_add_room_announcement',id_info.get("email"),room=ROOM_ID)
-    login_user(get_user(id_info.get("email")))
-    print("new")        
-    return redirect("https://chatoos.herokuapp.com/?user=new")
-    # except DuplicateKeyError:
-    #     print("old")
-    #     login_user(get_user(id_info.get("email")))
-    #     return redirect("https://chatoos.herokuapp.com")
+    try:
+        save_user(id_info.get("email"),id_info.get("name"),id_info.get("picture"))
+        add_room_member(ROOM_ID,ROOM_NAME,id_info.get("email"),ADDED_BY,is_room_admin=False)
+        socketio.emit('fresh_add_room_announcement',id_info.get("email"),room=ROOM_ID)
+        login_user(get_user(id_info.get("email")))
+        print("new")        
+        return redirect("https://chatoos.herokuapp.com/?user=new")
+    except DuplicateKeyError:
+        print("old")
+        login_user(get_user(id_info.get("email")))
+        return redirect("https://chatoos.herokuapp.com")
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect("https://chatoos.herokuapp.com")
 
 
 @app.route('/notifications', methods=['GET','POST'])
