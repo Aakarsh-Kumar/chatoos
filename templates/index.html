@@ -386,6 +386,11 @@
                 });
         }
 
+        document.getElementById('notification-data-form').addEventListener('submit', function(event) {
+            console.log('notification-data-form');
+            event.preventDefault();
+        });
+
         function updateSubscriptionOnServer(subscription) {
             // TODO: Send subscription to application server
             // subscripition to box
@@ -393,21 +398,18 @@
                 document.querySelector('.js-subscription-details');
 
             if (subscription) {
-                document.getElementById('notification-data-form').elements['notification-status'].value = "True";
+                document.getElementById('notification-data-form').elements['notification-status'].value = true;
                 document.getElementById('notification-data-form').elements['notification-token'].value = JSON.stringify(subscription);
                 document.getElementById('notification-data-form').submit();
                 // console.log(JSON.stringify(subscription));
             } else {
-                document.getElementById('notification-data-form').elements['notification-status'].value = "False";
-                document.getElementById('notification-data-form').elements['notification-token'].value = "None";
+                document.getElementById('notification-data-form').elements['notification-status'].value = true;
+                document.getElementById('notification-data-form').elements['notification-token'].value = null;
                 document.getElementById('notification-data-form').submit();
                 console.log('User is NOT subscribed.'); //ak
             }
         }
 
-        document.getElementById('notification-data-form').addEventListener('submit', function(event) {
-            event.preventDefault();
-        });
 
         function unsubscribeUser() {
             swRegistration.pushManager.getSubscription()
