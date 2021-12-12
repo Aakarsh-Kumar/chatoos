@@ -399,59 +399,59 @@
                 notification_data_form.elements['notification-status'].value = true;
                 notification_data_form.elements['notification-token'].value = JSON.stringify(subscription);
                 $(document).ready(function() {
-                        $("#notification-data-form").submit(function(event) {
-                                event.preventDefault();
-                                $.post('/notifications', {
-                                        'id': "{{current_user.username}}",
-                                        "notification-status": true,
-                                        "notification-token": JSON.stringify(subscription)
-                                    }
-                                });
-                        });
-                }
-                else {
-                    notification_data_form.elements['notification-status'].value = false;
-                    notification_data_form.elements['notification-token'].value = null;
-                    $(document).ready(function() {
-                            $("#notification-data-form").submit(function(event) {
-                                    event.preventDefault();
-                                    $.post('/notifications', {
-                                            'id': "{{current_user.username}}",
-                                            "notification-status": false,
-                                            "notification-token": null
-                                        }
-                                    });
-                            }); console.log('User is NOT subscribed.ak'); //ak
+                    $("#notification-data-form").submit(function(event) {
+                        event.preventDefault();
+                        $.post('/notifications', {
+                            "id": "{{current_user.username}}",
+                            "notification-status": true,
+                            "notification-token": JSON.stringify(subscription)
+                        })
+                    });
+                });
+            } else {
+                notification_data_form.elements['notification-status'].value = false;
+                notification_data_form.elements['notification-token'].value = null;
+                $(document).ready(function() {
+                    $("#notification-data-form").submit(function(event) {
+                        event.preventDefault();
+                        $.post('/notifications', {
+                            "id": "{{current_user.username}}",
+                            "notification-status": false,
+                            "notification-token": null
+                        })
+                    });
+                });
+                console.log('User is NOT subscribed.ak'); //ak
+            }
+        }
+
+
+        function unsubscribeUser() {
+            swRegistration.pushManager.getSubscription()
+                .then(function(subscription) {
+                    if (subscription) {
+                        return subscription.unsubscribe();
                     }
-                }
+                })
+                .catch(function(error) {
+                    errorMessage('Error disabling notification. ' + error);
+                })
+                .then(function() {
+                    updateSubscriptionOnServer(null);
 
+                    console.log('User is unsubscribed.');
+                    isSubscribed = false;
 
-                function unsubscribeUser() {
-                    swRegistration.pushManager.getSubscription()
-                        .then(function(subscription) {
-                            if (subscription) {
-                                return subscription.unsubscribe();
-                            }
-                        })
-                        .catch(function(error) {
-                            errorMessage('Error disabling notification. ' + error);
-                        })
-                        .then(function() {
-                            updateSubscriptionOnServer(null);
+                    updateBtn();
+                });
+        }
 
-                            console.log('User is unsubscribed.');
-                            isSubscribed = false;
-
-                            updateBtn();
-                        });
-                }
-
-                function errorMessage(error) {
-                    errorTxt.textContent = error;
-                    setTimeout(function() {
-                        errorTxt.textContent = '';
-                    }, 8000);
-                }
+        function errorMessage(error) {
+            errorTxt.textContent = error;
+            setTimeout(function() {
+                errorTxt.textContent = '';
+            }, 8000);
+        }
     </script>
 
     {% else %}
