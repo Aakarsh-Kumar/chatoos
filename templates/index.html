@@ -222,10 +222,10 @@
         <div class="header-right">
             <a class="active" href="/">Home</a> {% if current_user.is_authenticated %}
             <a href="/create-room">New Room</a>
-            <a href="logout">Logout</a> {% else %}
-            <a href="/login">Login</a>
-            <a><button id="pushButton" style="border: none; background: none;">
-                <img id = "pushButtonImg" src="/static/img/icons/notification-off.png" alt="Slow Connection!" style="margin-right: 10px;"></button></a> {%endif%}
+            <a href="logout">Logout</a>
+            <a style="padding-top:5px"><button id="pushButton" style="border: none; background: none; padding:0px; margin:0px;">
+                <img id="pushButtonImg" src="/static/img/icons/notification-off.png" alt="Slow Connection!" style="margin: 0px; padding:0px;"></button></a>{% else %}
+            <a href="/login">Login</a> {%endif%}
         </div>
     </div>
 
