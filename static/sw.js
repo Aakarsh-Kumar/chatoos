@@ -24,10 +24,12 @@
 self.addEventListener('push', function(event) {
     console.log('[Service Worker] Push Received.');
     console.log(`[Service Worker] Push had this data: "${event.data}"`);
+    console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+    let a = JSON.parse(event.data)
 
-    const title = 'a';
+    const title = a.title;
     const options = {
-        body: 'a',
+        body: a.body,
         icon: 'https://chatoos.herokuapp.com/static/img/logo-img.png',
         badge: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
         "vibrate": [400, 100, 400]
