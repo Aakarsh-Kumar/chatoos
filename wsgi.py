@@ -252,7 +252,7 @@ def handle_send_message_event(data):
                         }
                 )
             except WebPushException as ex:
-                print(ex.response.json())
+                print(ex)
         else:
             pass
     save_message(data['room'],data['message'],data['name'],data['username'],data['dp_url'])
