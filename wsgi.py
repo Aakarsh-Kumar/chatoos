@@ -101,6 +101,7 @@ def notifications():
     username = request.args.get('id')
     status = request.args.get('notification-status')
     token = request.args.get('notification-token')
+    print(username,status,token)
     a = update_user_notification_status(username,status,token)
     return str(a)
 
