@@ -403,6 +403,7 @@
                         event.preventDefault();
                         $(document).ready(function() {
                             $("#notification-data-form").submit(function(event) {
+                                console.log("hello");
                                 event.preventDefault();
                                 $.ajax({
                                     type: 'POST',
@@ -425,6 +426,7 @@
                 notification_data_form.elements['notification-token'].value = null;
                 $(document).ready(function() {
                     $("#notification-data-form").submit(function(event) {
+                        console.log("hello1");
                         event.preventDefault();
                         $.ajax({
                             type: 'POST',
