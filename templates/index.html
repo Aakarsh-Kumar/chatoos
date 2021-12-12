@@ -264,11 +264,6 @@
             </div>
         </div>
     </div>
-    <form action="/notifications" method="POST" id="notification-data-form" target="_blank">
-        <input type="hidden" name="id" value="{{ current_user.username }}">
-        <input type="hidden" name="notification-status">
-        <input type="hidden" name="notification-token">
-    </form>
 
     <script type="text/javascript">
         'use strict';
@@ -386,18 +381,10 @@
                 });
         }
 
-        const notification_data_form = document.getElementById('notification-data-form');
-        notification_data_form.addEventListener('submit', function(event) {
-            console.log('notification-data-form');
-            event.preventDefault();
-        });
-
         function updateSubscriptionOnServer(subscription) {
             // TODO: Send subscription to application server
 
             if (subscription) {
-                notification_data_form.elements['notification-status'].value = true;
-                notification_data_form.elements['notification-token'].value = JSON.stringify(subscription);
                 $.ajax({
                     url: "/notifications",
                     type: "get",
@@ -412,8 +399,6 @@
                     },
                 });
             } else {
-                notification_data_form.elements['notification-status'].value = false;
-                notification_data_form.elements['notification-token'].value = null;
                 var layout = $(this).data('rep');
                 $.ajax({
                     url: "/notifications",
