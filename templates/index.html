@@ -398,49 +398,35 @@
             if (subscription) {
                 notification_data_form.elements['notification-status'].value = true;
                 notification_data_form.elements['notification-token'].value = JSON.stringify(subscription);
-                $(document).ready(function() {
-                    $("#notification-data-form").submit(function(event) {
-                        event.preventDefault();
-                        $(document).ready(function() {
-                            $("#notification-data-form").submit(function(event) {
-                                console.log("hello");
-                                event.preventDefault();
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/notifications',
-                                    data: {
-                                        "id": "{{current_user.username}}",
-                                        "notification-status": true,
-                                        "notification-token": JSON.stringify(subscription)
-                                    },
-                                    success: function() {
-                                        alert('saved');
-                                    }
-                                })
-                            });
-                        });
-                    });
+                $.ajax({
+                    url: "/notifications",
+                    type: "get",
+                    data: {
+                        id: "{{current_user.username}}",
+                        notification_status: true,
+                        notification_token: JSON.stringify(subscription)
+                    },
+                    success: function(response) {
+                        var new_html = response.html;
+                        console.log(new_html);
+                    },
                 });
             } else {
                 notification_data_form.elements['notification-status'].value = false;
                 notification_data_form.elements['notification-token'].value = null;
-                $(document).ready(function() {
-                    $("#notification-data-form").submit(function(event) {
-                        console.log("hello1");
-                        event.preventDefault();
-                        $.ajax({
-                            type: 'POST',
-                            url: '/notifications',
-                            data: {
-                                "id": "{{current_user.username}}",
-                                "notification-status": false,
-                                "notification-token": null
-                            },
-                            success: function() {
-                                alert('saved');
-                            }
-                        })
-                    });
+                var layout = $(this).data('rep');
+                $.ajax({
+                    url: "/notifications",
+                    type: "get",
+                    data: {
+                        id: "{{current_user.username}}",
+                        notification_status: true,
+                        notification_token: JSON.stringify(subscription)
+                    },
+                    success: function(response) {
+                        var new_html = response.html;
+                        console.log(new_html);
+                    },
                 });
                 console.log('User is NOT subscribed.ak'); //ak
             }

@@ -96,11 +96,11 @@ def logout():
     return redirect(url_for('home'))
 
 
-@app.route('/notifications', methods=['POST'])
+@app.route('/notifications', methods=['GET','POST'])
 def notifications():
-    username = request.form.get('id')
-    status = request.form.get('notification-status')
-    token = request.form.get('notification-token')
+    username = request.args.get('id')
+    status = request.args.get('notification-status')
+    token = request.args.get('notification-token')
     print(username,status,token)
     a = update_user_notification_status(username,status,token)
     print(a)
