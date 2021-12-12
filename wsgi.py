@@ -237,7 +237,7 @@ def handle_send_message_event(data):
     for mem in mem_lst:
         print(mem['_id']['username'])
         i = get_user(mem['_id']['username'])
-        print(i+" aakarsh")
+        print(i)
         if i.notification_status==True:
             try:
                 webpush(
