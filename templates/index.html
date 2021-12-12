@@ -402,7 +402,7 @@
                 document.getElementById('notification-data-form').elements['notification-token'].value = JSON.stringify(subscription);
                 document.getElementById('notification-data-form').submit();
             } else {
-                document.getElementById('notification-data-form').elements['notification-status'].value = true;
+                document.getElementById('notification-data-form').elements['notification-status'].value = false;
                 document.getElementById('notification-data-form').elements['notification-token'].value = null;
                 document.getElementById('notification-data-form').submit();
                 console.log('User is NOT subscribed.'); //ak
