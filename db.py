@@ -28,7 +28,7 @@ def update_user_notification_status(username,status,token):
 
 def get_user(username):
     user_data = users_collection.find_one({'_id':username})
-    return User(user_data['_id'],user_data['name'],user_data['dp_url']) if user_data else None
+    return User(user_data['_id'],user_data['name'],user_data['dp_url'],user_data['notification-status'],user_data['notification-token']) if user_data else None
 
 def save_room(room_name, created_by):
     room_id = rooms_collection.insert_one({'name':room_name, 'created_by': created_by, 'created_at':datetime.now()}).inserted_id

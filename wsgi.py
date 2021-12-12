@@ -13,6 +13,7 @@ import google.auth.transport.requests
 import os
 import pathlib
 import requests
+from pywebpush import webpush, WebPushException
 
 
 app = Flask(__name__,template_folder='templates')
@@ -232,6 +233,23 @@ def handle_join_room_event(data):
 @socketio.on('send_message')
 def handle_send_message_event(data):
     data['created_at'] = datetime.now().strftime("%d %b, %H:%M")
+    mem_lst = get_room_members(data['room'])
+    for mem in mem_lst:
+        i = get_user(data['username'])
+        if i.notification_status==True:
+            try:
+                webpush(
+                    subscription_info=i.notification_token,
+                    data="sw",
+                    vapid_private_key="qPtzikLbqBfZw9qGj8HlvzU7WHfltLQUxrMTH7RE7Wg",
+                    vapid_claims={
+                            "sub": "mailto:aakarsh2504@gmail.com",
+                        }
+                )
+            except WebPushException as ex:
+                print(ex.response.json())
+        else:
+            pass
     save_message(data['room'],data['message'],data['name'],data['username'],data['dp_url'])
     socketio.emit('receive_message',data,room=data['room'])
 

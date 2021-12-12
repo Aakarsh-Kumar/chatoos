@@ -1,10 +1,12 @@
 from werkzeug.security import check_password_hash
 
 class User:
-    def __init__(self,username,name,dp_url):
+    def __init__(self,username,name,dp_url,notification_status,notification_token):
         self.username = username
         self.name = name
         self.dp_url = dp_url
+        self.notification_status = notification_status
+        self.notification_token = notification_token
 
     @staticmethod
     def is_authenticated(self):
