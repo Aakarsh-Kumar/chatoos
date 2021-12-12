@@ -238,7 +238,7 @@ def handle_send_message_event(data):
         print(mem['_id']['username'])
         i = get_user(mem['_id']['username'])
         print(getattr(i,'notification_status'))
-        if getattr(i,'notification_status')==True:
+        if getattr(i,'notification_status')=="true":
             try:
                 webpush(
                     subscription_info=getattr(i,'notification_token'),
