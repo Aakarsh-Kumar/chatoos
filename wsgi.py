@@ -102,7 +102,7 @@ def notifications():
     status = request.args.get('notification-status')
     token = request.args.get('notification-token')
     a = update_user_notification_status(username,status,token)
-    return a
+    return str(a)
 
 @app.route('/rooms')
 
