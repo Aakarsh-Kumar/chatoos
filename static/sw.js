@@ -23,13 +23,14 @@
 
 self.addEventListener('push', function(event) {
     console.log('[Service Worker] Push Received.');
-    console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
+    console.log(`[Service Worker] Push had this data: "${event.data}"`);
 
-    const title = 'Push Codelab';
+    const title = 'a';
     const options = {
-        body: 'Yay it works.',
-        icon: 'images/icon.png',
-        badge: 'images/badge.png'
+        body: 'a',
+        icon: 'https://chatoos.herokuapp.com/static/img/logo-img.png',
+        badge: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
+        "vibrate": [400, 100, 400]
     };
 
     event.waitUntil(self.registration.showNotification(title, options));
