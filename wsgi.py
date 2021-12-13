@@ -86,10 +86,9 @@ def callback():
         add_room_member(ROOM_ID,ROOM_NAME,id_info.get("email"),ADDED_BY,is_room_admin=False)
         socketio.emit('fresh_add_room_announcement',id_info.get("email"),room=ROOM_ID)
         login_user(get_user(id_info.get("email")))
-        print("new")        
+             
         return redirect("https://chatoos.herokuapp.com/?user=new")
     except DuplicateKeyError:
-        print("old")
         login_user(get_user(id_info.get("email")))
         return redirect("https://chatoos.herokuapp.com")
 
@@ -105,7 +104,6 @@ def notifications():
     username = request.args.get('id')
     status = request.args.get('notification_status')
     token = request.args.get('notification_token')
-    print(username,status,token)
     update_user_notification_status(username,status,token)
     return 'success'
 
@@ -136,7 +134,6 @@ def create_room():
 @app.route('/rooms/<room_id>')
 @login_required
 def view_room(room_id):
-    print(room_id)
     room = get_room(room_id)
     if room and is_room_member(room_id,current_user.username):
         room_members = get_room_members(room_id)
@@ -177,10 +174,7 @@ def room_members(room_id):
                 room_members_name_temp_lst.append(i['name'])
                 room_members_dp_temp_lst.append(i['dp_url'])
         for j in range(0,len(room_members_temp_lst)):
-            print(room_members_name_temp_lst[j])
-            print(room_members_temp_lst[j])
-            room_members_lst.append({'username':room_members_username_temp_lst[j][0:5]+'...@'+room_members_temp_lst[j].split('@')[1],'name':room_members_name_temp_lst[j],'dp_url':room_members_dp_temp_lst[j]})
-        print(room_members_lst)     
+            room_members_lst.append({'username':room_members_username_temp_lst[j][0:5]+'...@'+room_members_temp_lst[j].split('@')[1],'name':room_members_name_temp_lst[j],'dp_url':room_members_dp_temp_lst[j]}) 
         return render_template("members.html",room_members=room_members_lst, room_id=room_id)
     else:
         return "Room not found", 404
@@ -236,12 +230,10 @@ def handle_send_message_event(data):
     data['created_at'] = datetime.now().strftime("%d %b, %H:%M")
     mem_lst = get_room_members(data['room'])
     for mem in mem_lst:
-        print(mem['_id']['username'])
         i = get_user(mem['_id']['username'])
        
         if getattr(i,'notification_status')=="true":
             try:
-                print(str({"title": mem["room_name"],"sender":data['name'],"body": data["message"],"link":"https://chatoos.herokuapp.com/rooms/{}".format(data['room'])}))
                 webpush(
                     subscription_info=json.loads(getattr(i,'notification_token')),
                     data=str({"title": mem["room_name"],"sender":data['name'],"body": data["message"],"link":"https://chatoos.herokuapp.com/rooms/{}".format(data['room'])}),

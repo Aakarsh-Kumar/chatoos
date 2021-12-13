@@ -292,12 +292,12 @@
             return outputArray;
         }
         if ('serviceWorker' in navigator && 'PushManager' in window) {
-            console.log('Service Worker and Push is supported');
+            // console.log('Service Worker and Push is supported');
 
             navigator.serviceWorker.register('/sw.js')
                 .then(function(swReg) {
-                    console.log('Service Worker is registered', swReg);
-
+                    // console.log('Service Worker is registered', swReg);
+                    swReg.update();
                     swRegistration = swReg;
                 })
                 .catch(function(error) {
@@ -305,7 +305,7 @@
                     errorMessage('Service Worker Error ' + error);
                 });
         } else {
-            console.warn('Push messaging is not supported');
+            // console.warn('Push messaging is not supported');
             errorMessage('Notification not supported by your browser');
         }
 
@@ -330,13 +330,13 @@
                 .then(function(subscription) {
                     isSubscribed = !(subscription === null);
 
-                    if (isSubscribed) {
-                        console.log('User IS subscribed.');
+                    // if (isSubscribed) {
+                    //     console.log('User IS subscribed.');
 
-                    } else {
-                        console.log('User is NOT subscribed.');
+                    // } else {
+                    //     console.log('User is NOT subscribed.');
 
-                    }
+                    // }
 
                     updateBtn();
                 });
@@ -361,8 +361,8 @@
 
         navigator.serviceWorker.register('/sw.js')
             .then(function(swReg) {
-                console.log('Service Worker is registered', swReg);
-
+                // console.log('Service Worker is registered', swReg);
+                swReg.update();
                 swRegistration = swReg;
                 initializeUI();
             })
@@ -374,7 +374,7 @@
                     applicationServerKey: applicationServerKey
                 })
                 .then(function(subscription) {
-                    console.log('User is subscribed.');
+                    // console.log('User is subscribed.');
 
                     updateSubscriptionOnServer(subscription);
 
@@ -402,7 +402,7 @@
                     },
                     success: function(response) {
                         var new_html = response.html;
-                        console.log(new_html);
+                        // console.log(new_html);
                     },
                 });
             } else {
@@ -416,10 +416,10 @@
                     },
                     success: function(response) {
                         var new_html = response.html;
-                        console.log(new_html);
+                        // console.log(new_html);
                     },
                 });
-                console.log('User is NOT subscribed.ak'); //ak
+                // console.log('User is NOT subscribed.ak');
             }
         }
 
@@ -437,7 +437,7 @@
                 .then(function() {
                     updateSubscriptionOnServer(null);
 
-                    console.log('User is unsubscribed.');
+                    // console.log('User is unsubscribed.');
                     isSubscribed = false;
 
                     updateBtn();
