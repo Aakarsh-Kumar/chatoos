@@ -229,11 +229,15 @@ def handle_join_room_event(data):
 def handle_send_message_event(data):
     data['created_at'] = datetime.now().strftime("%d %b, %H:%M")
     mem_lst = get_room_members(data['room'])
+    print(mem_lst)
     for mem in mem_lst:
+        print(mem['_id']['username'])
         i = get_user(mem['_id']['username'])
-       
+        print(i)
         if getattr(i,'notification_status')=="true":
+            print("hello")
             try:
+                print("aakarsh")
                 webpush(
                     subscription_info=json.loads(getattr(i,'notification_token')),
                     data=str({"title": mem["room_name"],"sender":data['name'],"body": data["message"],"link":"https://chatoos.herokuapp.com/rooms/{}".format(data['room'])}),
@@ -244,8 +248,10 @@ def handle_send_message_event(data):
                         }
                 )
             except WebPushException as ex:
+                print("now")
                 print(ex)
         else:
+            print("hello1s")
             pass
     save_message(data['room'],data['message'],data['name'],data['username'],data['dp_url'])
     socketio.emit('receive_message',data,room=data['room'])
