@@ -25,11 +25,11 @@ self.addEventListener('push', function(event) {
     console.log('[Service Worker] Push Received.');
     console.log(`[Service Worker] Push had this data: ${typeof event.data.text()}`);
     console.log(`[Service Worker] Push had this data: ${event.data.text().replace(/'/g, '"')}`);
-    let a = JSON.parse(event.data.text().replace(/'/g, '"'));
+    a = JSON.parse(event.data.text().replace(/'/g, '"'));
 
     const title = a.title;
     const options = {
-        body: a.body,
+        body: a.sender + ": " + a.body,
         icon: 'https://chatoos.herokuapp.com/static/img/logo-img.png',
         badge: 'https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg',
         "vibrate": [400, 100, 400]
@@ -44,6 +44,6 @@ self.addEventListener('notificationclick', function(event) {
     event.notification.close();
 
     event.waitUntil(
-        clients.openWindow('https://developers.google.com/web/')
+        clients.openWindow(a.link)
     );
 });

@@ -243,10 +243,10 @@ def handle_send_message_event(data):
         print(json.loads(getattr(i,'notification_token')))
         if getattr(i,'notification_status')=="true":
             try:
-                print(str({"title": mem["room_name"],"body": data["message"]}))
+                print(str({"title": mem["room_name"],"sender":data['name'],"body": data["message"],"link":"https://chatoos.herokuapp.com/rooms/{}".format(data['room'])}))
                 webpush(
                     subscription_info=json.loads(getattr(i,'notification_token')),
-                    data=str({"title": mem["room_name"],"body": data["message"]})   ,
+                    data=str({"title": mem["room_name"],"sender":data['name'],"body": data["message"],"link":"https://chatoos.herokuapp.com/rooms/{}".format(data['room'])}),
                     # data="{'title':'"+mem['room_name']+",'body':data['message']}",
                     vapid_private_key="qPtzikLbqBfZw9qGj8HlvzU7WHfltLQUxrMTH7RE7Wg",
                     vapid_claims={
