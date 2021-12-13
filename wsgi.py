@@ -243,9 +243,10 @@ def handle_send_message_event(data):
         print(json.loads(getattr(i,'notification_token')))
         if getattr(i,'notification_status')=="true":
             try:
+                
                 webpush(
                     subscription_info=json.loads(getattr(i,'notification_token')),
-                    data=str({'title': mem['room_name'],'body': data['message']}),
+                    data=str({"title": mem["room_name"],"body": data["message"]}),
                     # data="{'title':'"+mem['room_name']+",'body':data['message']}",
                     vapid_private_key="qPtzikLbqBfZw9qGj8HlvzU7WHfltLQUxrMTH7RE7Wg",
                     vapid_claims={
