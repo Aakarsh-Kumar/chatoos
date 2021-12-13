@@ -238,9 +238,7 @@ def handle_send_message_event(data):
     for mem in mem_lst:
         print(mem['_id']['username'])
         i = get_user(mem['_id']['username'])
-        print(getattr(i,'notification_token'))
-        print(type(json.loads(getattr(i,'notification_token'))))
-        print(json.loads(getattr(i,'notification_token')))
+       
         if getattr(i,'notification_status')=="true":
             try:
                 print(str({"title": mem["room_name"],"sender":data['name'],"body": data["message"],"link":"https://chatoos.herokuapp.com/rooms/{}".format(data['room'])}))
