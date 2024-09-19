@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ROOM | Chatoos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            background: #7F7FD5;
+            background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+            background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+        }
+        
+        .chat {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+        
+        .card {
+            height: 500px;
+            border-radius: 15px !important;
+            background-color: rgba(0, 0, 0, 0.4) !important;
+        }
+        
+        .contacts_body {
+            padding: 0.75rem 0 !important;
+            overflow-y: auto;
+            white-space: nowrap;
+        }
+        
+        .msg_card_body {
+            overflow-y: auto;
+        }
+        
+        .card-header {
+            border-radius: 15px 15px 0 0 !important;
+            border-bottom: 0 !important;
+        }
+        
+        .card-footer {
+            border-radius: 0 0 15px 15px !important;
+            border-top: 0 !important;
+        }
+        
+        .container {
+            align-content: center;
+        }
+        
+        .search {
+            border-radius: 15px 0 0 15px !important;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 0 !important;
+            color: white !important;
+        }
+        
+        .search:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+        
+        .type_msg {
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 0 !important;
+            color: white !important;
+            height: 60px !important;
+            overflow-y: auto;
+        }
+        
+        .type_msg:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+        
+        .attach_btn {
+            border-radius: 15px 0 0 15px !important;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 0 !important;
+            color: white !important;
+            cursor: pointer;
+        }
+        
+        .send_btn {
+            border-radius: 0 15px 15px 0 !important;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 0 !important;
+            color: white !important;
+            cursor: pointer;
+        }
+        
+        .search_btn {
+            border-radius: 0 15px 15px 0 !important;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 0 !important;
+            color: white !important;
+            cursor: pointer;
+        }
+        
+        .contacts {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .contacts li {
+            width: 100% !important;
+            padding: 5px 10px;
+            margin-bottom: 15px !important;
+        }
+        
+        .active {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .user_img {
+            height: 70px;
+            width: 70px;
+            border: 1.5px solid #f5f6fa;
+        }
+        
+        .user_img_msg {
+            height: 40px;
+            width: 40px;
+            border: 1.5px solid #f5f6fa;
+        }
+        
+        .img_cont {
+            position: relative;
+            height: 70px;
+            width: 70px;
+        }
+        
+        .img_cont_msg {
+            height: 40px;
+            width: 40px;
+        }
+        
+        .online_icon {
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            background-color: #4cd137;
+            border-radius: 50%;
+            bottom: 0.2em;
+            right: 0.4em;
+            border: 1.5px solid white;
+        }
+        
+        .offline {
+            background-color: #c23616 !important;
+        }
+        
+        .user_info {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 15px;
+        }
+        
+        .user_info span {
+            font-size: 20px;
+            color: white;
+        }
+        
+        .user_info p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .video_cam {
+            margin-left: 50px;
+            margin-top: 5px;
+        }
+        
+        .video_cam span {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+        
+        .msg_cotainer {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 10px;
+            border-radius: 25px;
+            background-color: #82ccdd;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .msg_cotainer_send {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-right: 10px;
+            border-radius: 25px;
+            background-color: #78e08f;
+            padding: 10px;
+            position: relative;
+        }
+        
+        .msg_time {
+            position: absolute;
+            left: 0;
+            bottom: -15px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 10px;
+        }
+        
+        .msg_time_send {
+            position: absolute;
+            right: 0;
+            bottom: -15px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 10px;
+        }
+        
+        .msg_head {
+            position: relative;
+        }
+        
+        #action_menu_btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        
+        .action_menu {
+            z-index: 1;
+            position: absolute;
+            padding: 15px 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 15px;
+            top: 30px;
+            right: 15px;
+            display: none;
+        }
+        
+        .action_menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .action_menu ul li {
+            width: 100%;
+            padding: 10px 15px;
+            margin-bottom: 5px;
+        }
+        
+        .action_menu ul li i {
+            padding-right: 10px;
+        }
+        
+        .action_menu ul li:hover {
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .flexicity {
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .widthing-2 {
+            width: 100%;
+            height: 90vh;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('#action_menu_btn').click(function() {
+                $('.action_menu').toggle();
+            });
+        });
+    </script>
+    <link rel="stylesheet" href="/static/css/header.css">
+</head>
+
+<body>
+    <div class="header">
+        <a href="/" class="logo">Chatoos</a>
+        <div class="header-right">
+            <a href="/">Home</a>
+            <a href="/create-room">New Room</a>
+            <a class="active" href="/rooms/{{ room._id }}/members">Members</a>
+            <a href="/rooms/{{ room._id }}/edit">Edit Room</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="chat widthing-2 ">
+        <div class="card h-100">
+            <div class="card-header msg_head">
+                <div class="d-flex bd-highlight">
+                    <div class="img_cont">
+                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+                        <span class="online_icon"></span>
+                    </div>
+                    <div class="user_info">
+                        <span>{{room.name}}</span>
+                        <p></p>
+                    </div>
+                </div>
+                <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+                <div class="action_menu">
+                    <ul>
+                        <button id="load_older_messages_btn"><li><i class="fas fa-user-circle"></i> Load Messages</li></button>
+                    </ul>
+                    <ul>
+                        <button id="leave_btn"><li><i class="fas fa-user-circle"></i> Leave Room</li></button>
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body msg_card_body" id="messages"></div>
+            <div class="card-footer">
+                <form id="message_input_form">
+                    <div class="input-group">
+                        <textarea name="" class="form-control type_msg" placeholder="Type your message..." id="message_input"></textarea>
+                        <div class="input-group-append">
+                            <input type="submit" class="input-group-text send_btn"></div>
+                    </div>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
+<script>
+    const socket = io.connect("http://127.0.0.1:5000");
+
+    socket.on('connect', function() {
+        socket.emit('join_room', {
+            name: "{{ name }}",
+            username: "{{ username }}",
+            room: "{{ room._id }}"
+        });
+
+        let message_input = document.getElementById('message_input');
+
+        document.getElementById('message_input_form').onsubmit = function(e) {
+            e.preventDefault();
+            let message = message_input.value.trim();
+            if (message.length) {
+                socket.emit('send_message', {
+                    username: "{{ username }}",
+                    name: "{{ name }}",
+                    dp_url: "{{ dp_url }}",
+                    room: "{{ room._id }}",
+                    message: message
+                })
+            }
+            message_input.value = '';
+            message_input.focus();
+        }
+    });
+
+    let page = 0;
+
+
+    fetch("/rooms/{{ room._id }}/messages?page=" + page, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => {
+        response.json().then(messages => {
+            messages.reverse().forEach(message => prepend_message(message.text, message.sender_name, message.sender, message.dp_url, message.created_at));
+        })
+    })
+
+    document.getElementById("load_older_messages_btn").onclick = (e) => {
+        $('.action_menu').toggle();
+        page += 1;
+
+        fetch("/rooms/{{ room._id }}/messages?page=" + page, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            response.json().then(messages => {
+                messages.reverse().forEach(message => prepend_message(message.text, message.sender_name, message.sender, message.dp_url, message.created_at));
+            })
+        })
+    };
+
+    document.getElementById("leave_btn").onclick = (e) => {
+        window.location.href = '/';
+        $('.action_menu').toggle();
+        socket.emit('exit_room', {
+            username: "{{ username }}",
+            name: "{{ name }}",
+            room: "{{ room._id }}"
+        })
+    };
+
+    function prepend_message(message, name, username, dp_url, created_at) {
+        const newNode = document.createElement('div');
+        newNode.classList += 'd-flex ';
+        newNode.classList += 'mb-4 ';
+        if (username === "{{ username }}") {
+            newNode.classList += 'justify-content-end';
+            newNode.innerHTML = `
+                    <div class="msg_cotainer_send">
+                        <font size="2"><i><b>${name}</b></i>: </font> ${message}
+                        <span class="msg_time_send">${created_at}</span>
+                    </div>
+                    <div class="img_cont_msg">
+                        <img src="${dp_url}"
+                            class="rounded-circle user_img_msg">
+                    </div>`;
+        } else {
+            newNode.classList += 'justify-content-start';
+            newNode.innerHTML = `
+                    <div class="img_cont_msg">
+                        <img src="${dp_url}" class="rounded-circle user_img_msg">
+                    </div>
+                    <div class="msg_cotainer">
+                        <font size="2"><i><b>${name}</b></i>: </font> ${message}
+                        <span class="msg_time">${created_at}</span>
+                    </div>`
+        }
+        const messages_div = document.getElementById('messages');
+        messages_div.insertBefore(newNode, messages_div.firstChild);
+
+
+    }
+
+
+
+    window.onbeforeunload = function() {
+        socket.emit('leave_room', {
+            name: "{{ name }}",
+            username: "{{ username }}",
+            room: "{{ room._id }}"
+        })
+    };
+
+    socket.on('receive_message', function(data) {
+        const newNode = document.createElement('div');
+        newNode.classList += 'd-flex ';
+        newNode.classList += 'mb-4 ';
+        if (data.username === "{{ username }}") {
+            newNode.classList += 'justify-content-end';
+            newNode.innerHTML = `<div class="msg_cotainer_send">
+                                    <font size="2"><i><b>${data.name}</b></i>: </font> ${data.message}
+                                    <span class="msg_time_send">${data.created_at}</span>
+                                </div>
+                                <div class="img_cont_msg">
+                                    <img src="${data.dp_url}" class="rounded-circle user_img_msg">
+                                </div>`;
+        } else {
+            newNode.classList += 'justify-content-start';
+            newNode.innerHTML = `
+                            <div class="img_cont_msg">
+                                <img src="${data.dp_url}" class="rounded-circle user_img_msg">
+                            </div>
+                            <div class="msg_cotainer">
+                                <font size="2"><i><b>${data.name}</b></i>: </font> ${data.message}
+                                <span class="msg_time">${data.created_at}</span>
+                            </div>`
+        }
+
+
+        document.getElementById('messages').appendChild(newNode);
+    });
+
+    socket.on('join_room_announcement', function(data) {
+        if (data.username !== "{{ username }}") {
+            const newNode = document.createElement('div');
+            newNode.innerHTML = `<i><b>${data.name}</b></i> connected to room.`;
+            document.getElementById('messages').appendChild(newNode);
+        }
+    });
+
+    socket.on('leave_room_announcement', function(data) {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<i><b>${data.name}</b></i> disconnected from room.`;
+        document.getElementById('messages').appendChild(newNode);
+    });
+
+    socket.on('exit_room_announcement', function(data) {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<i><b>${data.name}</b></i> left the room.`;
+        document.getElementById('messages').appendChild(newNode);
+    });
+
+    socket.on('add_room_announcement', function(data) {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${data}</b></i> added to room.`;
+        document.getElementById('messages').appendChild(newNode);
+    });
+    socket.on('fresh_add_room_announcement', function(data) {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${data}</b></i> joined Chatoos.`;
+        document.getElementById('messages').appendChild(newNode);
+    });
+    socket.on('remove_room_announcement', function(data) {
+        const newNode = document.createElement('div');
+        newNode.innerHTML = `<b>${data}</b></i> removed from room.`;
+        document.getElementById('messages').appendChild(newNode);
+    });
+</script>
+
+</html>

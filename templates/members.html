@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-site-verification" content="M9eEjJT2WuUDdeO1YiBXEJIDWNGnM8_ZJu4_NSCsVaY" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+
+    <title>HOME | Chatoos</title>
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="shortcut icon" href="/static/img/—Pngtree—chat icon in neon style_5272676.ico" type="image/x-icon">
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            background: #7F7FD5;
+            background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+            background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+        }
+        
+        .chat {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+        
+        .card {
+            height: 500px;
+            border-radius: 15px !important;
+            background-color: rgba(0, 0, 0, 0.4) !important;
+        }
+        
+        .contacts_body {
+            padding: 0.75rem 0 !important;
+            overflow-y: auto;
+            white-space: nowrap;
+        }
+        
+        .card-header {
+            border-radius: 15px 15px 0 0 !important;
+            border-bottom: 0 !important;
+        }
+        
+        .card-footer {
+            border-radius: 0 0 15px 15px !important;
+            border-top: 0 !important;
+        }
+        
+        .search {
+            border-radius: 15px 0 0 15px !important;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 0 !important;
+            color: white !important;
+        }
+        
+        .search:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+        
+        .search_btn {
+            border-radius: 0 15px 15px 0 !important;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 0 !important;
+            color: white !important;
+            cursor: pointer;
+        }
+        
+        .contacts {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .contacts li {
+            width: 100% !important;
+            padding: 5px 10px;
+            margin-bottom: 15px !important;
+        }
+        
+        .active {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .user_img {
+            height: 50px;
+            width: 50px;
+            border: 1.5px solid #f5f6fa;
+        }
+        
+        .img_cont {
+            position: relative;
+            height: 50px;
+            width: 50px;
+        }
+        
+        .online_icon {
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            background-color: #4cd137;
+            border-radius: 50%;
+            bottom: 0.2em;
+            right: 0.4em;
+            border: 1.5px solid white;
+        }
+        
+        .offline {
+            background-color: #c23616 !important;
+        }
+        
+        .user_info {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 15px;
+        }
+        
+        .user_info span {
+            font-size: 20px;
+            color: white;
+        }
+        
+        .user_info p {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .msg_head {
+            position: relative;
+        }
+        
+        .flexicity {
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .widthing-1 {
+            width: 100%;
+            height: 90vh;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .white:link {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .white:visited {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .white:hover {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .white:active {
+            color: white;
+            text-decoration: none;
+        }
+        
+        button {
+            padding-left: 25px;
+            padding-right: 25px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .sec-one {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+        }
+        
+        .sec-one * {
+            margin: 5px;
+        }
+        
+        .sec-two {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+        }
+        
+        .sec-two * {
+            width: 33vw;
+        }
+        
+        .m-10 {
+            margin: 10px;
+        }
+        
+        @media screen and (max-width: 628px) {
+            .sec-one {
+                flex-direction: column;
+            }
+            .sec-two {
+                flex-direction: column;
+            }
+            .sec-two * {
+                width: 100vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <a href="/" class="logo">Chatoos</a>
+        <div class="header-right">
+            <a class="active" href="/rooms/{{ room_id }}">Back</a>
+            <a href="/">Home</a>
+            <a class="active" href="/rooms/{{ room_id }}/edit">Edit Room</a>
+            <a href="/create-room">New Room</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+    <div class="w-100">
+        <div class="flexicity w-100">
+            <div class="chat widthing-1">
+                <div class="card  contacts_card h-100">
+                    <center style="color:chartreuse; margin-top: 20px; font-size: 24px; font-weight:900;">Members List</center>
+                    <div class="card-body contacts_body">
+                        <ui class="contacts">
+                            {% for member in room_members %}
+                            <li>
+                                <div class="d-flex bd-highlight">
+                                    <div class="img_cont" width="80px">
+                                        <img src="{{ member.dp_url }}" class="rounded-circle user_img">
+                                    </div>
+                                    <div class="user_info" style="margin-left: 15px;">
+                                        <span><a class="white" style="font-size:16px;">{{ member.name }} ({{ member.username }})</a></span>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ui>
+                    </div>
+                    <div class="card-footer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="google-site-verification" content="M9eEjJT2WuUDdeO1YiBXEJIDWNGnM8_ZJu4_NSCsVaY" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+
+    <title>HOME | Chatoos</title>
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="shortcut icon" href="/static/img/—Pngtree—chat icon in neon style_5272676.ico" type="image/x-icon">
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            background: #7F7FD5;
+            background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+            background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+        }
+        
+        .chat {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+        
+        .card {
+            height: 500px;
+            border-radius: 15px !important;
+            background-color: rgba(0, 0, 0, 0.4) !important;
+        }
+        
+        .contacts_body {
+            padding: 0.75rem 0 !important;
+            overflow-y: auto;
+            white-space: nowrap;
+        }
+        
+        .card-header {
+            border-radius: 15px 15px 0 0 !important;
+            border-bottom: 0 !important;
+        }
+        
+        .card-footer {
+            border-radius: 0 0 15px 15px !important;
+            border-top: 0 !important;
+        }
+        
+        .search {
+            border-radius: 15px 0 0 15px !important;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 0 !important;
+            color: white !important;
+        }
+        
+        .search:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+        
+        .search_btn {
+            border-radius: 0 15px 15px 0 !important;
+            background-color: rgba(0, 0, 0, 0.3) !important;
+            border: 0 !important;
+            color: white !important;
+            cursor: pointer;
+        }
+        
+        .contacts {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .contacts li {
+            width: 100% !important;
+            padding: 5px 10px;
+            margin-bottom: 15px !important;
+        }
+        
+        .active {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .user_img {
+            height: 70px;
+            width: 70px;
+            border: 1.5px solid #f5f6fa;
+        }
+        
+        .img_cont {
+            position: relative;
+            height: 70px;
+            width: 70px;
+        }
+        
+        .online_icon {
+            position: absolute;
+            height: 15px;
+            width: 15px;
+            background-color: #4cd137;
+            border-radius: 50%;
+            bottom: 0.2em;
+            right: 0.4em;
+            border: 1.5px solid white;
+        }
+        
+        .offline {
+            background-color: #c23616 !important;
+        }
+        
+        .user_info {
+            margin-top: auto;
+            margin-bottom: auto;
+            margin-left: 15px;
+        }
+        
+        .user_info span {
+            font-size: 20px;
+            color: white;
+        }
+        
+        .user_info p {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .msg_head {
+            position: relative;
+        }
+        
+        .flexicity {
+            display: flex;
+            flex-direction: row;
+        }
+        
+        .widthing-1 {
+            width: 100%;
+            height: 90vh;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .white:link {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .white:visited {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .white:hover {
+            color: white;
+            text-decoration: none;
+        }
+        
+        .white:active {
+            color: white;
+            text-decoration: none;
+        }
+        
+        button {
+            padding-left: 25px;
+            padding-right: 25px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .sec-one {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+        }
+        
+        .sec-one * {
+            margin: 5px;
+        }
+        
+        .sec-two {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+        }
+        
+        .sec-two * {
+            width: 33vw;
+        }
+        
+        .m-10 {
+            margin: 10px;
+        }
+        
+        @media screen and (max-width: 628px) {
+            .sec-one {
+                flex-direction: column;
+            }
+            .sec-two {
+                flex-direction: column;
+            }
+            .sec-two * {
+                width: 100vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <a href="/" class="logo">Chatoos</a>
+        <div class="header-right">
+            <a class="active" href="/">Home</a> {% if current_user.is_authenticated %}
+            <a href="/create-room">New Room</a>
+            <a href="logout">Logout</a>
+            <a style="padding-top:5px"><button id="pushButton" style="border: none; background: none; padding:0px; margin:0px;">
+                <img id="pushButtonImg" src="/static/img/icons/notification-off.png" alt="Slow Connection!" style="margin: 0px; padding:0px;"></button></a>{% else %}
+            <a href="/login">Login</a> {%endif%}
+        </div>
+    </div>
+
+    {% if current_user.is_authenticated %}
+    <span style="display: flex; justify-content: center; text-align: center; height: auto; color: red; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 18px;" id="errorTxt"></span>
+    <div class="w-100">
+        <div class="flexicity w-100">
+            <div class="chat widthing-1">
+                <div class="card  contacts_card h-100">
+                    <div class="card-header">
+                        <div class="input-group">
+                            <input type="text" placeholder="Search..." name="" class="form-control search">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body contacts_body">
+                        <ui class="contacts">
+                            {% for room in rooms %}
+                            <li>
+                                <div class="d-flex bd-highlight">
+                                    <div class="img_cont">
+                                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+                                    </div>
+                                    <div class="user_info">
+                                        <span><a href="/rooms/{{ room._id.room_id }}" class="white">{{ room.room_name }}</a></span>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ui>
+                    </div>
+                    <div class="card-footer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        'use strict';
+
+        const applicationServerPublicKey = 'BNz-icdkwDz2_h-1N_LWsF5vH38AJKCAj06HKc1QzBNOx-p4z_FUOsyG7JICS9GQuikUqWyUqtfnyScIYzslbYI';
+
+        const pushButton = document.querySelector('#pushButton');
+        const pushButtonImg = document.querySelector('#pushButtonImg');
+        const errorTxt = document.querySelector('#errorTxt');
+
+        let isSubscribed = false;
+        let swRegistration = null;
+
+        function urlB64ToUint8Array(base64String) {
+            const padding = '='.repeat((4 - base64String.length % 4) % 4);
+            const base64 = (base64String + padding)
+                .replace(/\-/g, '+')
+                .replace(/_/g, '/');
+
+            const rawData = window.atob(base64);
+            const outputArray = new Uint8Array(rawData.length);
+
+            for (let i = 0; i < rawData.length; ++i) {
+                outputArray[i] = rawData.charCodeAt(i);
+            }
+            return outputArray;
+        }
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
+            // console.log('Service Worker and Push is supported');
+
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(swReg) {
+                    // console.log('Service Worker is registered', swReg);
+                    swReg.update();
+                    swRegistration = swReg;
+                })
+                .catch(function(error) {
+                    console.error('Service Worker Error', error);
+                    errorMessage('Service Worker Error ' + error);
+                });
+        } else {
+            // console.warn('Push messaging is not supported');
+            errorMessage('Notification not supported by your browser');
+        }
+
+        function initializeUI() {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const user = urlParams.get('user');
+            if (user === "new") {
+                subscribeUser();
+            }
+
+            pushButton.addEventListener('click', function() {
+                pushButton.disabled = true;
+                if (isSubscribed) {
+                    unsubscribeUser();
+                } else {
+                    subscribeUser();
+                }
+            });
+            // Set the initial subscription value
+            swRegistration.pushManager.getSubscription()
+                .then(function(subscription) {
+                    isSubscribed = !(subscription === null);
+
+                    // if (isSubscribed) {
+                    //     console.log('User IS subscribed.');
+
+                    // } else {
+                    //     console.log('User is NOT subscribed.');
+
+                    // }
+
+                    updateBtn();
+                });
+        }
+
+        function updateBtn() {
+            if (Notification.permission === 'denied') {
+                errorMessage('Notification Permission Denied');
+                pushButton.disabled = true;
+                updateSubscriptionOnServer(null);
+                return;
+            }
+
+            if (isSubscribed) {
+                pushButtonImg.src = '/static/img/icons/notification-on.png';
+            } else {
+                pushButtonImg.src = '/static/img/icons/notification-off.png';
+            }
+
+            pushButton.disabled = false;
+        }
+
+        navigator.serviceWorker.register('/sw.js')
+            .then(function(swReg) {
+                // console.log('Service Worker is registered', swReg);
+                swReg.update();
+                swRegistration = swReg;
+                initializeUI();
+            })
+
+        function subscribeUser() {
+            const applicationServerKey = urlB64ToUint8Array(applicationServerPublicKey);
+            swRegistration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: applicationServerKey
+                })
+                .then(function(subscription) {
+                    // console.log('User is subscribed.');
+
+                    updateSubscriptionOnServer(subscription);
+
+                    isSubscribed = true;
+
+                    updateBtn();
+                })
+                .catch(function(err) {
+                    errorMessage('Failed to subscribe the user: ' + err);
+                    updateBtn();
+                });
+        }
+
+        function updateSubscriptionOnServer(subscription) {
+            // TODO: Send subscription to application server
+
+            if (subscription) {
+                $.ajax({
+                    url: "/notifications",
+                    type: "get",
+                    data: {
+                        id: "{{current_user.username}}",
+                        notification_status: true,
+                        notification_token: JSON.stringify(subscription)
+                    },
+                    success: function(response) {
+                        var new_html = response.html;
+                        // console.log(new_html);
+                    },
+                });
+            } else {
+                $.ajax({
+                    url: "/notifications",
+                    type: "get",
+                    data: {
+                        id: "{{current_user.username}}",
+                        notification_status: false,
+                        notification_token: JSON.stringify(subscription)
+                    },
+                    success: function(response) {
+                        var new_html = response.html;
+                        // console.log(new_html);
+                    },
+                });
+                // console.log('User is NOT subscribed.ak');
+            }
+        }
+
+
+        function unsubscribeUser() {
+            swRegistration.pushManager.getSubscription()
+                .then(function(subscription) {
+                    if (subscription) {
+                        return subscription.unsubscribe();
+                    }
+                })
+                .catch(function(error) {
+                    errorMessage('Error disabling notification. ' + error);
+                })
+                .then(function() {
+                    updateSubscriptionOnServer(null);
+
+                    // console.log('User is unsubscribed.');
+                    isSubscribed = false;
+
+                    updateBtn();
+                });
+        }
+
+        function errorMessage(error) {
+            errorTxt.textContent = error;
+            setTimeout(function() {
+                errorTxt.textContent = '';
+            }, 8000);
+        }
+    </script>
+
+    {% else %}
+
+    <h1 align="center" class="m-10">Welcome to Chatoos</h1>
+    <h2 align="center">"May anyone who enter's as a guest leave's as a friend" :)</h2>
+
+    <i>
+        <h4 align="center">Meet your friends in a very friendly environment <br> LogIn to access the features!
+        </h4>
+    </i>
+    <div class="sec-one">
+        <img src="/static/img/home_page/Image20210928184631.png" style="width: 40vw; margin-right: 70px; margin-left: 70px;" alt="Chatting with friends">
+        </a>
+        <a href="/login">
+            <button class="active" style="color: white;">GET STARTED
+        </button>
+        </a>
+    </div>
+    <hr style="margin: 0px 30px 0px 30px;">
+    <div class="sec-two">
+        <img src="/static/img/home_page/Image20210928184543.png" alt="Internet Connectivity Issue">
+        <img src="/static/img/home_page/Image20210928184605.png" alt="Internet Connectivity Issue">
+        <img src="/static/img/home_page/Image20210928184619.png" alt="Internet Connectivity Issue">
+    </div>
+    {%endif%}
+
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LOGIN | Chatoos</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="static/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+</head>
+
+<body bgcolor="grey">
+    <div class="header">
+        <a href="/" class="logo">Chatoos</a>
+        <div class="header-right">
+            <a class="active" href="/">Home</a>
+            <a href="/signup">Signup</a>
+        </div>
+    </div>
+    <div class="main">
+
+        <div class="container">
+            <form class="appointment-form" id="appointment-form" action="/login" method="POST">
+                <h2>LOGIN</h2>
+                <h3>{{message}}</h3>
+                <div class="form-group-1">
+                    <input type="text" name="username" id="username" placeholder="Username" required autofocus />
+                    <input type="password" name="password" id="password" placeholder="Password" required/>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="submit">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
